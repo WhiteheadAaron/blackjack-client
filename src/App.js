@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import './components/login.css';
+import './components/game.css';
 import Login from './components/Login';
 import Game from './components/Game';
 import Profile from './components/Profile';
