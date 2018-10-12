@@ -8,28 +8,27 @@ export function Game(props) {
   return (
     <div className="gameBack">
       <div className="gameGrid">
-        <div className="gameNav">
-          <Link className="profile" to="/profile">
-            <button
-              className="profileButton"
-              onClick={() => {
-                console.log("Going to Profile");
-              }}
-            >
-              My Profile
-            </button>
-          </Link>
-          <Link className="signOut" to="/">
-            <button
-              className="signOutButton"
-              onClick={() => {
-                console.log("Signed Out");
-              }}
-            >
-              Sign Out
-            </button>
-          </Link>
-        </div>
+        <Link className="profile" to="/profile">
+          <button
+            className="profileButton"
+            onClick={() => {
+              console.log("Going to Profile");
+            }}
+          >
+            My Profile
+          </button>
+        </Link>
+        <Link className="signOut" to="/">
+          <button
+            className="signOutButton"
+            onClick={() => {
+              console.log("Signed Out");
+            }}
+          >
+            Sign Out
+          </button>
+        </Link>
+
         <div className="dealerCard1">
           <img src={card} alt="Dealer's first card" />
         </div>
