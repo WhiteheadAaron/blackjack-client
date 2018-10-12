@@ -5,6 +5,7 @@ import './components/login.css';
 import Login from './components/Login';
 import Game from './components/Game';
 import Profile from './components/Profile';
+import { connect } from 'react-redux';
 
 
 const AppRouter = () => (
@@ -19,4 +20,6 @@ const AppRouter = () => (
   </BrowserRouter>
 );
 
-export default AppRouter;
+function mapStateToProps(state) { return state; }
+
+export default connect(mapStateToProps)(AppRouter);

@@ -57,6 +57,7 @@ body {
     border: solid white 1px;
     width: 80px;
     height: 25px;
+    outline: none;
 }
 
 .signUpSubmit:hover {
