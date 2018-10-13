@@ -9,7 +9,7 @@ import Profile from './components/Profile';
 import { connect } from 'react-redux';
 
 
-const AppRouter = () => (
+const AppRouter = (props) => (
   <BrowserRouter>
     <React.Fragment>
       <Switch>
