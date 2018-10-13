@@ -15,6 +15,7 @@
     grid-template-rows: repeat(16, 50px);
     max-width: 1200px;
     background-image: url('../images/background.jpg');
+    background-size: 100%;
     margin-left: auto;
     margin-right: auto;
 }
