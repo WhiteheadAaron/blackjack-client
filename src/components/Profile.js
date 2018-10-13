@@ -1,9 +1,28 @@
 import React from "react";
+import { connect } from "react-redux";
+import { takeCard } from "../actions/actions";
 
-const Profile = () => (
-  <div className="App">
-    <h1>My Profile</h1>
-  </div>
-);
+export function Profile(props) {
+  console.log(props);
+  return (
+    <div className="App">
+      <h1>My Profile</h1>
+      <button
+        onClick={() => {
+          props.dispatch(takeCard({ src: "jackspades", value: 10 }));
+        }}
+      >
+        Hello
+      </button>
+    </div>
+  );
+}
 
-export default Profile;
+function mapStateToProps(state) {
+  console.log(state)
+  return {
+    playerCards: state.inGameReducer.playerCards
+  };
+}
+
+export default connect(mapStateToProps)(Profile);

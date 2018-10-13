@@ -1,23 +1,25 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { Player } from "./player";
 import { Dealer } from "./dealer";
+import { connect } from 'react-redux';
 
 export function Game(props) {
-  console.log(props);
   return (
     <div className="gameBack">
       <div className="gameGrid">
-        <Dealer />
-        <Player takeCard={props.takeCard} />
+        <Dealer {...props} />
+        <Player {...props} />
       </div>
     </div>
   );
 }
 
-export const mapStateToProps = state => ({
-  inGame: state.inGame
-});
+function mapStateToProps(state) {
+  return {
+    images: state.takeCardReducer.images,
+    playerCards: state.takeCardReducer.playerCards,
+    inGame: state.takeCardReducer.inGame
+  };
+}
 
 export default connect(mapStateToProps)(Game);
