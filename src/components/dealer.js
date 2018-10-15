@@ -91,7 +91,7 @@ export function Dealer(props) {
       }
       if (
         props.dealerPoints >= props.playerPoints &&
-        props.dealerPoints <= 21
+        props.dealerPoints <= 21 || props.playerPoints > 21
       ) {
         console.log(props);
         return (
