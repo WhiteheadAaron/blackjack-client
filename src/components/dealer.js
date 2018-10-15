@@ -31,7 +31,6 @@ export function Dealer(props) {
         props.dispatch(dealerCard(card));
         dealerValue = card.value;
         if (props.dealerPoints + dealerValue < 17) {
-          console.log(props.dealerPoints + dealerValue);
           let card2 =
             props.images[
               Number(Math.floor(Math.random() * props.images.length))
@@ -39,7 +38,6 @@ export function Dealer(props) {
           props.dispatch(dealerCard(card2));
           dealerValue2 = dealerValue + card2.value;
           if (props.dealerPoints + dealerValue2 < 17) {
-            console.log(props.dealerPoints + dealerValue2);
             let card3 =
               props.images[
                 Number(Math.floor(Math.random() * props.images.length))
@@ -47,7 +45,6 @@ export function Dealer(props) {
             props.dispatch(dealerCard(card3));
             dealerValue3 = dealerValue2 + card3.value;
             if (props.dealerPoints + dealerValue3 < 17) {
-              console.log(props.dealerPoints + dealerValue3);
               let card4 =
                 props.images[
                   Number(Math.floor(Math.random() * props.images.length))
@@ -62,10 +59,10 @@ export function Dealer(props) {
 
     if (props.dealerPoints) {
       function renderDealerCards() {
-        console.log(props.dealerCards.length);
+
         let newArr = [];
         for (let i = 0; i < props.dealerCards.length; i++) {
-          console.log(props.dealerCards.length);
+
           newArr.push(
             <div className={`dealerCard${i}`}>
               <img
@@ -78,7 +75,7 @@ export function Dealer(props) {
         return newArr;
       }
       function renderPlayerCards() {
-        console.log(props.playerCards.length);
+
         let newArr = [];
         for (let i = 0; i < props.playerCards.length; i++) {
           newArr.push(
@@ -93,15 +90,23 @@ export function Dealer(props) {
         return  newArr;
       }
       if (
-        (props.dealerPoints >= props.playerPoints &&
+        (props.dealerPoints > props.playerPoints &&
           props.dealerPoints <= 21) ||
         props.playerPoints > 21
       ) {
-        console.log(props);
+        let dealerP = props.dealerPoints;
+        let playerP = props.playerPoints;
+        if (props.dealerPoints > 21 && props.playerPoints <= 21) {
+          dealerP = 'Bust'
+        }
+        if (props.playerPoints > 21) {
+          playerP = 'Bust'
+        }
         return (
           <React.Fragment>
-            <h1>You lost.</h1>
+            <h1 className="youLost">You lose.</h1>
             <button
+              className="playAgainButton"
               onClick={() => {
                 props.dispatch(newGame());
                 let card1 =
@@ -124,22 +129,74 @@ export function Dealer(props) {
             >
               New Game
             </button>
-            <p className="dealerPoints">Dealer Points: {props.dealerPoints}</p>
-            <p className="playerPoints">Player Points: {props.playerPoints}</p>
+            <p className="dealerPoints">Dealer Points: {dealerP}</p>
+            <p className="playerPoints">Player Points: {playerP}</p>
             {renderPlayerCards()}
             {renderDealerCards()}
           </React.Fragment>
         );
       }
       if (props.dealerPoints < props.playerPoints || props.dealerPoints > 21) {
+        let dealerP = props.dealerPoints;
+        let playerP = props.playerPoints;
+        if (props.dealerPoints > 21 && props.playerPoints <= 21) {
+          dealerP = 'Bust'
+        }
+        if (props.playerPoints > 21) {
+          playerP = 'Bust'
+        }
         return (
           <React.Fragment>
-            <h1>You win.</h1>
-            <p className="dealerPoints">Dealer Points: {props.dealerPoints}</p>
-            <p className="playerPoints">Player Points: {props.playerPoints}</p>
+            <h1 className="youLost">You win.</h1>
+            <p className="dealerPoints">Dealer Points: {dealerP}</p>
+            <p className="playerPoints">Player Points: {playerP}</p>
             {renderPlayerCards()}
             {renderDealerCards()}
             <button
+              className="playAgainButton"
+              onClick={() => {
+                props.dispatch(newGame());
+                let card1 =
+                  props.images[
+                    Number(Math.floor(Math.random() * props.images.length))
+                  ];
+                props.dispatch(takeCard(card1));
+                let card2 =
+                  props.images[
+                    Number(Math.floor(Math.random() * props.images.length))
+                  ];
+                props.dispatch(takeCard(card2));
+                let card3 =
+                  props.images[
+                    Number(Math.floor(Math.random() * props.images.length))
+                  ];
+                props.dispatch(dealerCard(card3));
+                props.dispatch(inGame(true));
+              }}
+            >
+              New Game
+            </button>
+          </React.Fragment>
+        );
+      }
+      if (props.dealerPoints === props.playerPoints && props.dealerPoints <= 21 && props.playerPoints <= 21) {
+        let dealerP = props.dealerPoints;
+        let playerP = props.playerPoints;
+        if (props.dealerPoints > 21 && props.playerPoints <= 21) {
+          dealerP = 'Bust'
+        }
+        if (props.playerPoints > 21) {
+          playerP = 'Bust'
+        }
+        return (
+          <React.Fragment>
+            <h1 className="youLost">It is a tie.</h1>
+            <p className="dealerPoints">Dealer Points: {dealerP}</p>
+            <p className="playerPoints">Player Points: {playerP}</p>
+            {renderPlayerCards()}
+            {renderDealerCards()}
+            <button
+              className="playAgainButton"
               onClick={() => {
                 props.dispatch(newGame());
                 let card1 =

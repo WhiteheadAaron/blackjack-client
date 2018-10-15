@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { takeCard, inGame, dealerCard, newGame } from "../actions/actions";
-import { Link } from "react-router-dom";
+
 
 export function Player(props) {
   const faceDown = require(`../images/deck.jpg`);
@@ -64,25 +64,30 @@ export function Player(props) {
   }
   if (
     props.inGame === true &&
-    props.playerCards.length <= 2 &&
     props.playerPoints <= 21
   ) {
+    function renderPlayerCards() {
+      let newArr = [];
+      for (let i = 0; i < props.playerCards.length; i++) {
+        newArr.push(
+          <div className={`playerCard${i}`}>
+            <img
+              src={require(`../images/${props.playerCards[i].src}.jpg`)}
+              alt={`Player card number ${i + 1}`}
+            />
+          </div>
+        );
+      }
+      return newArr;
+    }
     return (
       <React.Fragment>
-        <Link className="profile" to="/profile">
-          <button className="profileButton" onClick={() => {}}>
-            My Profile
-          </button>
-        </Link>
-        <Link className="signOut" to="/">
-          <button className="signOutButton" onClick={() => {}}>
-            Sign Out
-          </button>
-        </Link>
+
 
         <div className="deckImgDiv">
           <img src={faceDown} alt="Deck of Cards" />
         </div>
+        <p className="playerPointCount">Your Current Points: {props.playerPoints}</p>
         <button
           className="hitButton"
           onClick={() => {
@@ -92,160 +97,27 @@ export function Player(props) {
               ];
             props.dispatch(takeCard(card));
             let newValue = props.playerPoints + card.value;
-            if (newValue > 21)  {
-              props.dispatch(inGame('results'))
+            if (newValue > 21) {
+              props.dispatch(inGame("results"));
             }
           }}
         >
           Hit
         </button>
-        <button className="stayButton" onClick={() => {
-          props.dispatch(inGame('results'))
-        }}>
-          Stay
-        </button>
-        <div className="playerCard0">
-          <img
-            src={require(`../images/${props.playerCards[0].src}.jpg`)}
-            alt="Player's first card"
-          />
-        </div>
-        <div className="playerCard1">
-          <img
-            src={require(`../images/${props.playerCards[1].src}.jpg`)}
-            alt="Player's second card"
-          />
-        </div>
-      </React.Fragment>
-    );
-  }
-  if (
-    props.inGame === true &&
-    props.playerCards.length === 3 &&
-    props.playerPoints <= 21
-  ) {
-    return (
-      <React.Fragment>
-        <Link className="profile" to="/profile">
-          <button className="profileButton" onClick={() => {}}>
-            My Profile
-          </button>
-        </Link>
-        <Link className="signOut" to="/">
-          <button className="signOutButton" onClick={() => {}}>
-            Sign Out
-          </button>
-        </Link>
-
-        <div className="deckImgDiv">
-          <img src={faceDown} alt="Deck of Cards" />
-        </div>
         <button
-          className="hitButton"
+          className="stayButton"
           onClick={() => {
-            let card =
-              props.images[
-                Number(Math.floor(Math.random() * props.images.length))
-              ];
-            props.dispatch(takeCard(card));
+            props.dispatch(inGame("results"));
           }}
         >
-          Hit
-        </button>
-        <button className="stayButton" onClick={() => {
-          props.dispatch(inGame('results'))
-        }}>
           Stay
         </button>
-        <div className="playerCard0">
-          <img
-            src={require(`../images/${props.playerCards[0].src}.jpg`)}
-            alt="Player's first card"
-          />
-        </div>
-        <div className="playerCard1">
-          <img
-            src={require(`../images/${props.playerCards[1].src}.jpg`)}
-            alt="Player's second card"
-          />
-        </div>
-        <div className="playerCard2">
-          <img
-            src={require(`../images/${props.playerCards[2].src}.jpg`)}
-            alt="Player's third card"
-          />
-        </div>
+        {renderPlayerCards()}
       </React.Fragment>
     );
   }
-  if (
-    props.inGame === true &&
-    props.playerCards.length === 4 &&
-    props.playerPoints <= 21
-  ) {
-    return (
-      <React.Fragment>
-        <Link className="profile" to="/profile">
-          <button className="profileButton" onClick={() => {}}>
-            My Profile
-          </button>
-        </Link>
-        <Link className="signOut" to="/">
-          <button className="signOutButton" onClick={() => {}}>
-            Sign Out
-          </button>
-        </Link>
-
-        <div className="deckImgDiv">
-          <img src={faceDown} alt="Deck of Cards" />
-        </div>
-        <button
-          className="hitButton"
-          onClick={() => {
-            let card =
-              props.images[
-                Number(Math.floor(Math.random() * props.images.length))
-              ];
-            props.dispatch(takeCard(card));
-          }}
-        >
-          Hit
-        </button>
-        <button className="stayButton" onClick={() => {
-          props.dispatch(inGame('results'))
-        }}>
-          Stay
-        </button>
-        <div className="playerCard0">
-          <img
-            src={require(`../images/${props.playerCards[0].src}.jpg`)}
-            alt="Player's first card"
-          />
-        </div>
-        <div className="playerCard1">
-          <img
-            src={require(`../images/${props.playerCards[1].src}.jpg`)}
-            alt="Player's second card"
-          />
-        </div>
-        <div className="playerCard2">
-          <img
-            src={require(`../images/${props.playerCards[2].src}.jpg`)}
-            alt="Player's third card"
-          />
-        </div>
-        <div className="playerCard">
-          <img
-            src={require(`../images/${props.playerCards[3].src}.jpg`)}
-            alt="Player's fourth card"
-          />
-        </div>
-      </React.Fragment>
-    );
-  }
-
-  else {
-    return '';
+ else {
+    return "";
   }
 }
 
