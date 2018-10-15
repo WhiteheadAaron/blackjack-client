@@ -58,15 +58,15 @@ export function Dealer(props) {
         }
       }
     }
-    checkCards()
+    checkCards();
 
     if (props.dealerPoints) {
-  
       function renderDealerCards() {
         console.log(props.dealerCards.length);
-        for (let i = 0; i <= props.dealerCards.length; i++) {
+        let newArr = [];
+        for (let i = 0; i < props.dealerCards.length; i++) {
           console.log(props.dealerCards.length);
-          return (
+          newArr.push(
             <div className={`dealerCard${i}`}>
               <img
                 src={require(`../images/${props.dealerCards[i].src}.jpg`)}
@@ -75,11 +75,13 @@ export function Dealer(props) {
             </div>
           );
         }
+        return newArr;
       }
       function renderPlayerCards() {
         console.log(props.playerCards.length);
-        for (let i = 0; i <= props.playerCards.length; i++) {
-          return (
+        let newArr = [];
+        for (let i = 0; i < props.playerCards.length; i++) {
+          newArr.push(
             <div className={`playerCard${i}`}>
               <img
                 src={require(`../images/${props.playerCards[i].src}.jpg`)}
@@ -88,10 +90,12 @@ export function Dealer(props) {
             </div>
           );
         }
+        return  newArr;
       }
       if (
-        props.dealerPoints >= props.playerPoints &&
-        props.dealerPoints <= 21 || props.playerPoints > 21
+        (props.dealerPoints >= props.playerPoints &&
+          props.dealerPoints <= 21) ||
+        props.playerPoints > 21
       ) {
         console.log(props);
         return (
