@@ -13,3 +13,19 @@ export const takeCard = (value) => {
         value
     };
 }
+
+export const DEALER_CARD = 'DEALER_CARD'
+export const dealerCard = (value) => {
+    return {
+        type: DEALER_CARD,
+        value
+    }
+}
+
+export const NEW_GAME = 'NEW_GAME';
+export const newGame = (value) => {
+    return {
+        type: NEW_GAME,
+        value
+    }
+}

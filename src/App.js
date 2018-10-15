@@ -12,7 +12,6 @@ class AppRouter extends Component {
  
 
   render() {
-    console.log(this.props)
     return (
       <BrowserRouter>
         <React.Fragment>
@@ -28,7 +27,6 @@ class AppRouter extends Component {
                   />
                 );
               }}
-              inGame="hello"
               exact={true}
             />
             <Route path="/profile" component={Profile} exact={true} />
@@ -44,7 +42,10 @@ function mapStateToProps(state) {
   return {
     images: state.takeCardReducer.images,
     playerCards: state.takeCardReducer.playerCards,
-    inGame: state.inGame
+    inGame: state.inGameReducer.inGame,
+    dealerCards: state.takeCardReducer.dealerCards,
+    dealerPoints: state.takeCardReducer.dealerPoints,
+    playerPoints: state.takeCardReducer.playerPoints
   };
 }
 

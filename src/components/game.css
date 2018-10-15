@@ -57,13 +57,23 @@ img {
     height: 100%;
 }
 
-.dealerCard1 {
+.dealerCard0 {
     grid-column: 4 / 6;
     grid-row: 3 / 7;
 }
 
-.dealerCard2 {
+.dealerCard1 {
     grid-column: 6 / 8;
+    grid-row: 3 / 7;
+}
+
+.dealerCard2 {
+    grid-column: 8 / 10;
+    grid-row: 3 / 7;
+}
+
+.dealerCard3 {
+    grid-column: 10 / 12;
     grid-row: 3 / 7;
 }
 
@@ -87,12 +97,22 @@ img {
     cursor: pointer;
 }
 
-.playerCard1 {
+.playerCard0 {
     grid-column: 4 / 6;
     grid-row: 10 / 14;
 }
 
-.playerCard2 {
+.playerCard1 {
     grid-column: 6 / 8;
+    grid-row: 10 / 14;
+}
+
+.playerCard2 {
+    grid-column: 8 / 10;
+    grid-row: 10 / 14;
+}
+
+.playerCard3 {
+    grid-column: 10 / 12;
     grid-row: 10 / 14;
 }

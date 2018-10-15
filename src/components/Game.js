@@ -18,7 +18,10 @@ function mapStateToProps(state) {
   return {
     images: state.takeCardReducer.images,
     playerCards: state.takeCardReducer.playerCards,
-    inGame: state.takeCardReducer.inGame
+    inGame: state.inGameReducer.inGame,
+    dealerCards: state.takeCardReducer.dealerCards,
+    dealerPoints: state.takeCardReducer.dealerPoints,
+    playerPoints: state.takeCardReducer.playerPoints
   };
 }
 
