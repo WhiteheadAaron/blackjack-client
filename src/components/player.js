@@ -230,7 +230,7 @@ export function Player(props) {
             alt="Player's third card"
           />
         </div>
-        <div className="playerCard3">
+        <div className="playerCard">
           <img
             src={require(`../images/${props.playerCards[3].src}.jpg`)}
             alt="Player's fourth card"
@@ -238,7 +238,69 @@ export function Player(props) {
         </div>
       </React.Fragment>
     );
-  } else {
+  }
+  if (props.playerPoints === 21) {
+    function renderDealerCards() {
+      console.log(props.dealerCards.length);
+      for (let i = 0; i < props.dealerCards.length; i++) {
+        console.log(props.dealerCards.length);
+        return (
+          <div className={`dealerCard${i}`}>
+            <img
+              src={require(`../images/${props.dealerCards[i].src}.jpg`)}
+              alt={`Dealer card number ${i + 1}`}
+            />
+          </div>
+        );
+      }
+    }
+    function renderPlayerCards() {
+      console.log(props.playerCards.length);
+      for (let i = 0; i < props.playerCards.length; i++) {
+        return (
+          <div className={`playerCard${i}`}>
+            <img
+              src={require(`../images/${props.playerCards[i].src}.jpg`)}
+              alt={`Player card number ${i + 1}`}
+            />
+          </div>
+        );
+      }
+    }
+    return (
+      <React.Fragment>
+        <h1>You win.</h1>
+        <p className="dealerPoints">Dealer Points: {props.dealerPoints}</p>
+        <p className="playerPoints">Player Points: {props.playerPoints}</p>
+        {renderPlayerCards()}
+        {renderDealerCards()}
+        <button
+          onClick={() => {
+            props.dispatch(newGame());
+            let card1 =
+              props.images[
+                Number(Math.floor(Math.random() * props.images.length))
+              ];
+            props.dispatch(takeCard(card1));
+            let card2 =
+              props.images[
+                Number(Math.floor(Math.random() * props.images.length))
+              ];
+            props.dispatch(takeCard(card2));
+            let card3 =
+              props.images[
+                Number(Math.floor(Math.random() * props.images.length))
+              ];
+            props.dispatch(dealerCard(card3));
+            props.dispatch(inGame(true));
+          }}
+        >
+          New Game
+        </button>
+      </React.Fragment>
+    );
+  }
+  else {
     return '';
   }
 }
