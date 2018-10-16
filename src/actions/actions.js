@@ -71,6 +71,6 @@ export const getStatsAction = () => dispatch => {
     dispatch(fetchStatsRequest())
     fetch('https://blackjack-app-server.herokuapp.com/test')
         .then(res => res.json()) 
-        .then(res => dispatch(fetchStatsSuccess(res))) 
+        .then(res => dispatch(fetchStatsSuccess(res[0]))) 
         .catch(err => dispatch(fetchStatsError()));
 }
