@@ -146,7 +146,8 @@ img {
 
 .playerPointCount {
     grid-column: 4 / 10;
-    grid-row: 15 / 16;
+    grid-row: 14 / 16;
+    padding-top: 30px;
     color: white;
 }
 

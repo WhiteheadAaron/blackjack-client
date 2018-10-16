@@ -20,11 +20,7 @@ class AppRouter extends Component {
               path="/game"
               render={() => {
                 return (
-                  <Game
-                    images={this.props.images}
-                    playerCards={this.props.playerCards}
-                    inGame={this.props.inGame}
-                  />
+                  <Game/>
                 );
               }}
               exact={true}
@@ -44,10 +40,11 @@ function mapStateToProps(state) {
     playerCards: state.takeCardReducer.playerCards,
     inGame: state.inGameReducer.inGame,
     dealerCards: state.takeCardReducer.dealerCards,
-    dealerPoints: state.takeCardReducer.dealerPoints,
-    playerPoints: state.takeCardReducer.playerPoints,
     dPoints: state.takeCardReducer.dPoints,
-    pPoints: state.takeCardReducer.pPoints
+    pPoints: state.takeCardReducer.pPoints,
+    played: state.statReducer.played,
+    wins: state.statReducer.wins,
+    losses: state.statReducer.losses
   };
 }
 

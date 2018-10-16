@@ -45,3 +45,32 @@ export const removeDealerAce = (value) => {
         value
     }
 }
+
+export const fetchStatsRequest = (value) => {
+    return {
+        type: 'GET_STATS',
+        value
+    };
+};
+
+export const fetchStatsSuccess = value => {
+    return {
+        type: 'GET_STATS_SUCCESS',
+        value
+    }
+}
+
+export const fetchStatsError = value => {
+    return {
+        type: 'GET_STATS_ERROR',
+        value
+    }
+}
+
+export const getStatsAction = () => dispatch => {
+    dispatch(fetchStatsRequest())
+    fetch('https://blackjack-app-server.herokuapp.com/test')
+        .then(res => res.json()) 
+        .then(res => dispatch(fetchStatsSuccess(res))) 
+        .catch(err => dispatch(fetchStatsError()));
+}

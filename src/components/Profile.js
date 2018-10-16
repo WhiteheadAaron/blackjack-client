@@ -7,13 +7,9 @@ export function Profile(props) {
   return (
     <div className="App">
       <h1>My Profile</h1>
-      <button
-        onClick={() => {
-          props.dispatch(takeCard({ src: "jackspades", value: 10 }));
-        }}
-      >
-        Hello
-      </button>
+      <h3>Games Played: {props.played}</h3>
+      <h3>Wins: {props.wins}</h3>
+      <h3>Losses: {props.losses}</h3>
     </div>
   );
 }
@@ -21,7 +17,9 @@ export function Profile(props) {
 function mapStateToProps(state) {
   console.log(state)
   return {
-    playerCards: state.inGameReducer.playerCards
+    played: state.statReducer.played,
+    wins: state.statReducer.wins,
+    losses: state.statReducer.losses
   };
 }
 
