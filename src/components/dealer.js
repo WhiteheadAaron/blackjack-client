@@ -53,34 +53,25 @@ export function Dealer(props) {
       let card4;
       let images = props.images;
       if (dealerPointCount() < 17) {
-        card =
-          images[Number(Math.floor(Math.random() * images.length))];
+        console.log(dealerPointCount())
+        card = images[Number(Math.floor(Math.random() * images.length))];
         props.dispatch(dealerCard(card));
         dealerValue = card.value;
-        images = images.filter(item => item.src !== card.src)
+        images = images.filter(item => item.src !== card.src);
         if (dealerPointCount() + dealerValue < 17) {
-          card2 =
-            images[
-              Number(Math.floor(Math.random() * images.length))
-            ];
+          card2 = images[Number(Math.floor(Math.random() * images.length))];
           props.dispatch(dealerCard(card2));
           dealerValue2 = dealerValue + card2.value;
-          images = images.filter(item => item.src !== card2.src)
+          images = images.filter(item => item.src !== card2.src);
           if (dealerPointCount() + dealerValue2 < 17) {
-            card3 =
-              images[
-                Number(Math.floor(Math.random() * images.length))
-              ];
+            card3 = images[Number(Math.floor(Math.random() * images.length))];
             props.dispatch(dealerCard(card3));
             dealerValue3 = dealerValue2 + card3.value;
-            images = images.filter(item => item.src !== card3.src)
+            images = images.filter(item => item.src !== card3.src);
             if (dealerPointCount() + dealerValue3 < 17) {
-              card4 =
-                images[
-                  Number(Math.floor(Math.random() * images.length))
-                ];
+              card4 = images[Number(Math.floor(Math.random() * images.length))];
               props.dispatch(dealerCard(card4));
-              images = images.filter(item => item.src !== card4.src)
+              images = images.filter(item => item.src !== card4.src);
             }
 
             if (dealerPointCount() + dealerValue3 > 21) {
@@ -106,9 +97,9 @@ export function Dealer(props) {
           props.dispatch(removeDealerAce());
         }
       }
-
     }
     checkCards();
+
 
     if (dealerPointCount()) {
       function renderDealerCards() {
@@ -158,20 +149,17 @@ export function Dealer(props) {
               className="playAgainButton"
               onClick={() => {
                 props.dispatch(newGame());
+                let images = props.images;
                 let card1 =
-                  props.images[
-                    Number(Math.floor(Math.random() * props.images.length))
-                  ];
+                  images[Number(Math.floor(Math.random() * images.length))];
                 props.dispatch(takeCard(card1));
+                images = images.filter(item => item.src !== card1.src);
                 let card2 =
-                  props.images[
-                    Number(Math.floor(Math.random() * props.images.length))
-                  ];
+                  images[Number(Math.floor(Math.random() * images.length))];
                 props.dispatch(takeCard(card2));
+                images = images.filter(item => item.src !== card2.src);
                 let card3 =
-                  props.images[
-                    Number(Math.floor(Math.random() * props.images.length))
-                  ];
+                  images[Number(Math.floor(Math.random() * images.length))];
                 props.dispatch(dealerCard(card3));
                 props.dispatch(inGame(true));
               }}
