@@ -31,8 +31,8 @@ function mapStateToProps(state) {
     playerCards: state.takeCardReducer.playerCards,
     inGame: state.inGameReducer.inGame,
     dealerCards: state.takeCardReducer.dealerCards,
-    dealerPoints: state.takeCardReducer.dealerPoints,
-    playerPoints: state.takeCardReducer.playerPoints
+    pPoints: state.takeCardReducer.pPoints,
+    dPoints: state.takeCardReducer.dPoints
   };
 }
 

@@ -29,3 +29,19 @@ export const newGame = (value) => {
         value
     }
 }
+
+export const REMOVE_ACE = "REMOVE_ACE";
+export const removeAce = (value) => {
+    return {
+        type: REMOVE_ACE,
+        value
+    }
+}
+
+export const REMOVE_DEALER_ACE = "REMOVE_DEALER_ACE";
+export const removeDealerAce = (value) => {
+    return {
+        type: REMOVE_DEALER_ACE,
+        value
+    }
+}

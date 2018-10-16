@@ -1,4 +1,4 @@
-import { TAKE_CARD, DEALER_CARD, NEW_GAME } from "../actions/actions";
+import { TAKE_CARD, DEALER_CARD, NEW_GAME, REMOVE_ACE, REMOVE_DEALER_ACE } from "../actions/actions";
 
 const initialState = {
   images: [
@@ -215,7 +215,9 @@ const initialState = {
   dealerCards: [],
   playerPoints: 0,
   dealerPoints: 0,
-  inGame: true
+  inGame: true,
+  pPoints: [],
+  dPoints: []
 };
 
 const takeCardReducer = (state = initialState, action) => {
@@ -223,19 +225,20 @@ const takeCardReducer = (state = initialState, action) => {
     return Object.assign({}, state, {
       playerCards: [...state.playerCards, action.value],
       images: state.images.filter(item => item.src !== action.value.src),
-      playerPoints: state.playerPoints + action.value.value
+      playerPoints: state.playerPoints + action.value.value,
+      pPoints: [...state.pPoints, action.value.value]
     });
   } 
   if (action.type === DEALER_CARD) {
     return Object.assign({}, state, {
       dealerCards: [...state.dealerCards, action.value],
       images: state.images.filter(item => item.src !== action.value.src),
-      dealerPoints: state.dealerPoints + action.value.value
+      dealerPoints: state.dealerPoints + action.value.value,
+      dPoints: [...state.dPoints, action.value.value]
     });
   }
   if (action.type === NEW_GAME) {
     return Object.assign({}, state, {
-      inGame: false,
       dealerCards: [],
       playerCards: [],
       images: [
@@ -450,7 +453,33 @@ const takeCardReducer = (state = initialState, action) => {
       ],
       dealerPoints: 0,
       playerPoints: 0,
+      pPoints: [],
+      dPoints: []
     });
+  }
+  if (action.type === REMOVE_ACE) {
+    let newArr;
+    for (let i = 0; i < state.pPoints.length; i++) {
+      if (state.pPoints[i] === 11) {
+        newArr = state.pPoints.splice(i, 1)
+      }
+    }
+    return Object.assign({}, state, {
+      pPoints: newArr,
+      pPoints: [...state.pPoints, 1]
+    })
+  }
+  if (action.type === REMOVE_DEALER_ACE) {
+    let newArr;
+    for (let i = 0; i < state.dPoints.length; i++) {
+      if (state.dPoints[i] === 11) {
+        newArr = state.dPoints.splice(i, 1)
+      }
+    }
+    return Object.assign({}, state, {
+      dPoints: newArr,
+      dPoints: [...state.dPoints, 1]
+    })
   }
   else {
     return state;
