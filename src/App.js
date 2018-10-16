@@ -7,8 +7,13 @@ import Login from "./components/Login";
 import Game from "./components/Game";
 import Profile from "./components/Profile";
 import { connect } from "react-redux";
+import getStatsAction from './actions/actions';
 
 class AppRouter extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(getStatsAction())
+  }
  
 
   render() {
