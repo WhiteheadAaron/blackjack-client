@@ -8,6 +8,7 @@ import Game from "./components/Game";
 import Profile from "./components/Profile";
 import { connect } from "react-redux";
 import { getStatsAction } from './actions/actions';
+import Home from "./components/home";
 
 class AppRouter extends Component {
 
@@ -31,7 +32,7 @@ class AppRouter extends Component {
               exact={true}
             />
             <Route path="/profile" component={Profile} exact={true} />
-            <Route path="/" component={Login} />
+            <Route path="/" component={Home} />
           </Switch>
         </React.Fragment>
       </BrowserRouter>
@@ -49,7 +50,8 @@ function mapStateToProps(state) {
     pPoints: state.takeCardReducer.pPoints,
     played: state.statReducer.played,
     wins: state.statReducer.wins,
-    losses: state.statReducer.losses
+    losses: state.statReducer.losses,
+    authToken: state.loginReducer.authToken
   };
 }
 

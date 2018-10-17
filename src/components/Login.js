@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { inGame } from "../actions/actions";
-import { Link } from 'react-router-dom';
+import { loginAction } from '../actions/auth';
+import { registerAction } from '../actions/register';
 
 export function Login(props) {
   return (
@@ -28,15 +28,18 @@ export function Login(props) {
             className="loginForm"
             onSubmit={e => {
               e.preventDefault();
-              props.dispatch(inGame());
+              let username = e.target.username.value;
+              let password = e.target.password.value;
+              console.log(username, password)
+              props.dispatch(loginAction(username, password))
             }}
           >
             <label>Login</label>
             <input type="text" name="username" placeholder="Username" />
             <input type="text" name="password" placeholder="Password" />
-            <Link to="/game"><button type="submit" className="signInSubmit">
+            <button type="submit" className="signInSubmit">
               Submit
-            </button></Link>
+            </button>
           </form>
         </div>
         <div className="registerGrid">
@@ -44,7 +47,9 @@ export function Login(props) {
             className="registerForm"
             onSubmit={e => {
               e.preventDefault();
-              props.dispatch(inGame());
+              let username = e.target.username.value;
+              let password = e.target.password.value;
+              props.dispatch(registerAction(username, password))
             }}
           >
             <label>Sign Up</label>

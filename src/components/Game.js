@@ -36,7 +36,8 @@ function mapStateToProps(state) {
     dPoints: state.takeCardReducer.dPoints,
     played: state.statReducer.played,
     wins: state.statReducer.wins,
-    losses: state.statReducer.losses
+    losses: state.statReducer.losses,
+    authToken: state.loginReducer.authToken
   };
 }
 

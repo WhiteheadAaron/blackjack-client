@@ -25,6 +25,7 @@ export function Player(props) {
     return (
       <button
         onClick={() => {
+          props.dispatch(newGame())
           let images = props.images;
           let card1 =
             images[
@@ -53,6 +54,10 @@ export function Player(props) {
 
   if (props.inGame === true && playerPointCount() === 22) {
     props.dispatch(removeAce());
+  }
+
+  if (props.inGame === true && playerPointCount() === 21) {
+    props.dispatch(inGame("results"));
   }
 
   if (props.inGame === true && playerPointCount() <= 21) {

@@ -74,3 +74,4 @@ export const getStatsAction = () => dispatch => {
         .then(res => dispatch(fetchStatsSuccess(res[0]))) 
         .catch(err => dispatch(fetchStatsError()));
 }
+

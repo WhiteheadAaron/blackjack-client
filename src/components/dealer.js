@@ -169,7 +169,7 @@ export function Dealer(props) {
                 let card3 =
                   images[Number(Math.floor(Math.random() * images.length))];
                 props.dispatch(dealerCard(card3));
-                props.dispatch(inGame(true));
+                props.dispatch(inGame(false));
               }}
             >
               New Game
@@ -216,7 +216,7 @@ export function Dealer(props) {
                     Number(Math.floor(Math.random() * props.images.length))
                   ];
                 props.dispatch(dealerCard(card3));
-                props.dispatch(inGame(true));
+                props.dispatch(inGame(false));
               }}
             >
               New Game
