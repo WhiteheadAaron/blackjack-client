@@ -69,7 +69,7 @@ export const fetchStatsError = value => {
 
 export const getStatsAction = () => dispatch => {
     dispatch(fetchStatsRequest())
-    fetch('https://blackjack-app-server.herokuapp.com/users')
+    fetch('https://blackjack-app-server.herokuapp.com/stats')
         .then(res => res.json()) 
         .then(res => dispatch(fetchStatsSuccess(res[0]))) 
         .catch(err => dispatch(fetchStatsError()));
