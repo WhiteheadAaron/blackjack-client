@@ -49,9 +49,9 @@ export function Login(props) {
               e.preventDefault();
               let username = e.target.username.value;
               let password = e.target.password.value;
-              let wins = 0;
-              let played = 0;
-              let losses = 0;
+              let wins = '0';
+              let played = '0';
+              let losses = '0';
               props.dispatch(registerAction(username, password, played, wins, losses))
             }}
           >
