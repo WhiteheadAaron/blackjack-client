@@ -53,7 +53,7 @@ export function Dealer(props) {
       let card4;
       let images = props.images;
       if (dealerPointCount() < 17) {
-        console.log(dealerPointCount())
+        console.log(dealerPointCount());
         card = images[Number(Math.floor(Math.random() * images.length))];
         props.dispatch(dealerCard(card));
         dealerValue = card.value;
@@ -100,7 +100,6 @@ export function Dealer(props) {
     }
     checkCards();
 
-
     if (dealerPointCount()) {
       function renderDealerCards() {
         let newArr = [];
@@ -117,6 +116,15 @@ export function Dealer(props) {
         return newArr;
       }
       function renderPlayerCards() {
+        // const newArr = props.playerCards.map(item => {
+        //   <div className={`playerCard${props.playerCards[i]}`}>
+        //     <img
+        //       src={require(`../images/${props.playerCards[i].src}.jpg`)}
+        //       alt={`Player card number ${i + 1}`}
+        //     />
+        //   </div>;
+        // });
+        // return newArr;
         let newArr = [];
         for (let i = 0; i < props.playerCards.length; i++) {
           newArr.push(
