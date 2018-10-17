@@ -21,6 +21,7 @@ const registerReducer = (state = initialState, action) => {
             error: null
         });
     }
+
     else {
         return state;
     }

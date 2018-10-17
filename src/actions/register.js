@@ -3,7 +3,7 @@ import { API_BASE_URL } from "../config";
 
 
 export const REGISTER = "REGISTER";
-export const setAuthToken = value => ({
+export const register = value => ({
   type: REGISTER,
   value
 });
@@ -25,7 +25,7 @@ export const registerError = value => {
 }
 
 
-export const registerAction = (username, password, played, wins, losses) => dispatch => {
+export const registerAction = (username, password) => dispatch => {
   return (
     fetch(`${API_BASE_URL}/users`, {
       method: "POST",
@@ -34,15 +34,55 @@ export const registerAction = (username, password, played, wins, losses) => disp
       },
       body: JSON.stringify({
         username,
-        password,
+        password
+      })
+    })
+      .then(res => res.json())
+      .then(res => dispatch(registerSuccess(res))) 
+      .catch(err => dispatch(registerError()))
+    
+  );
+};
+
+export const STAT = "REGISTER";
+export const stat = value => ({
+  type: STAT,
+  value
+});
+
+export const STAT_SUCCESS = "STAT_SUCCESS";
+export const statSuccess = value => {
+    return {
+        type: STAT_SUCCESS,
+        value
+    }
+}
+
+export const STAT_ERROR = "STAT_ERROR"
+export const statError = value => {
+    return {
+        type: STAT_ERROR,
+        value
+    }
+}
+
+
+export const statAction = (played, wins, losses) => dispatch => {
+  return (
+    fetch(`${API_BASE_URL}/stats`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
         played,
         wins,
         losses
       })
     })
       .then(res => res.json())
-      .then(res => dispatch(registerSuccess(res))) 
-      .catch(err => dispatch(registerError()))
+      .then(res => dispatch(statSuccess(res))) 
+      .catch(err => dispatch(statError()))
+    
   );
 };
-

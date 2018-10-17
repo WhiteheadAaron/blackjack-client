@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loginAction } from '../actions/auth';
-import { registerAction } from '../actions/register';
+import { registerAction, statAction } from '../actions/register';
 
 export function Login(props) {
   return (
@@ -30,8 +30,12 @@ export function Login(props) {
               e.preventDefault();
               let username = e.target.username.value;
               let password = e.target.password.value;
+              let played = 0;
+              let wins = 0;
+              let losses = 0;
               console.log(username, password)
               props.dispatch(loginAction(username, password))
+              props.dispatch(statAction(played, wins, losses))
             }}
           >
             <label>Login</label>
@@ -49,10 +53,7 @@ export function Login(props) {
               e.preventDefault();
               let username = e.target.username.value;
               let password = e.target.password.value;
-              let wins = '0';
-              let played = '0';
-              let losses = '0';
-              props.dispatch(registerAction(username, password, played, wins, losses))
+              props.dispatch(registerAction(username, password))
             }}
           >
             <label>Sign Up</label>
