@@ -25,7 +25,7 @@ export const registerError = value => {
 }
 
 
-export const registerAction = (username, password) => dispatch => {
+export const registerAction = (username, password, played, wins, losses) => dispatch => {
   return (
     fetch(`${API_BASE_URL}/users`, {
       method: "POST",
@@ -34,7 +34,10 @@ export const registerAction = (username, password) => dispatch => {
       },
       body: JSON.stringify({
         username,
-        password
+        password,
+        played,
+        wins,
+        losses
       })
     })
       .then(res => res.json())
