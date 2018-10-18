@@ -201,20 +201,17 @@ export function Dealer(props) {
               className="playAgainButton"
               onClick={() => {
                 props.dispatch(newGame());
+                let images = props.images;
                 let card1 =
-                  props.images[
-                    Number(Math.floor(Math.random() * props.images.length))
-                  ];
+                  images[Number(Math.floor(Math.random() * images.length))];
                 props.dispatch(takeCard(card1));
+                images = images.filter(item => item.src !== card1.src);
                 let card2 =
-                  props.images[
-                    Number(Math.floor(Math.random() * props.images.length))
-                  ];
+                  images[Number(Math.floor(Math.random() * images.length))];
                 props.dispatch(takeCard(card2));
+                images = images.filter(item => item.src !== card2.src);
                 let card3 =
-                  props.images[
-                    Number(Math.floor(Math.random() * props.images.length))
-                  ];
+                  images[Number(Math.floor(Math.random() * images.length))];
                 props.dispatch(dealerCard(card3));
                 props.dispatch(inGame(false));
               }}

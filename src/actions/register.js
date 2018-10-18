@@ -36,8 +36,8 @@ export const registerAction = (username, password, played, wins, losses) => disp
   })
     .then(res => res.json())
     .then(res => dispatch(registerSuccess(res)))
+    .then(res => dispatch(statAction(played, wins, losses, res.value.id)))
     .then(res => dispatch(loginAction(username, password)))
-    .then(res => dispatch(statAction(played, wins, losses)))
     .catch(err => dispatch(registerError(err)));
 };
 
@@ -63,7 +63,7 @@ export const statError = value => {
   };
 };
 
-export const statAction = (played, wins, losses) => dispatch => {
+export const statAction = (played, wins, losses, userId) => dispatch => {
   return (
     fetch(`${API_BASE_URL}/stats`, {
       method: "POST",
@@ -73,10 +73,12 @@ export const statAction = (played, wins, losses) => dispatch => {
       body: JSON.stringify({
         played,
         wins,
-        losses
+        losses,
+        userId
       })
     })
       .then(res => res.json())
+      .then(res => console.log(res))
       .then(res => dispatch(statSuccess(res)))
       .catch(err => dispatch(statError()))
   );
