@@ -3,19 +3,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import "./components/login.css";
 import "./components/game.css";
-import Login from "./components/Login";
 import Game from "./components/Game";
 import Profile from "./components/Profile";
 import { connect } from "react-redux";
-import { getStatsAction } from './actions/actions';
 import Home from "./components/home";
 
 class AppRouter extends Component {
 
-  componentDidMount() {
-    this.props.dispatch(getStatsAction())
-  }
- 
 
   render() {
     return (

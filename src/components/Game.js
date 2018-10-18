@@ -3,6 +3,7 @@ import { Player } from "./player";
 import { Dealer } from "./dealer";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutAction, removeAuth } from '../actions/auth';
 
 export function Game(props) {
   return (
@@ -13,11 +14,12 @@ export function Game(props) {
             My Profile
           </button>
         </Link>
-        <Link className="signOut" to="/">
-          <button className="signOutButton" onClick={() => {}}>
+          <button className="signOut signOutButton" onClick={() => {
+            props.dispatch(removeAuth())
+            logoutAction()
+          }}>
             Sign Out
           </button>
-        </Link>
         <Dealer {...props} />
         <Player {...props} />
       </div>

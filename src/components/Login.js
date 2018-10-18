@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { loginAction } from '../actions/auth';
-import { registerAction, statAction } from '../actions/register';
+import { loginAction } from "../actions/auth";
+import { registerAction, statAction, stat } from "../actions/register";
 
 export function Login(props) {
   return (
@@ -30,12 +30,7 @@ export function Login(props) {
               e.preventDefault();
               let username = e.target.username.value;
               let password = e.target.password.value;
-              let played = 0;
-              let wins = 0;
-              let losses = 0;
-              console.log(username, password)
-              props.dispatch(loginAction(username, password))
-              props.dispatch(statAction(played, wins, losses))
+              props.dispatch(loginAction(username, password));
             }}
           >
             <label>Login</label>
@@ -53,7 +48,15 @@ export function Login(props) {
               e.preventDefault();
               let username = e.target.username.value;
               let password = e.target.password.value;
-              props.dispatch(registerAction(username, password))
+              let played = 0;
+              let wins = 0;
+              let losses = 0;
+              if (password === e.target.password2.value) {
+                props.dispatch(registerAction(username, password, played, wins, losses));
+              }
+              else {
+                console.log('passwords must match')
+              }
             }}
           >
             <label>Sign Up</label>

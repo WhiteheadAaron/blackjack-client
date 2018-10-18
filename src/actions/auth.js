@@ -49,6 +49,10 @@ const storeAuthInfo = (authToken, dispatch) => {
   saveAuthToken(authToken);
 };
 
+export const logoutAction = () => dispatch => {
+    dispatch(removeAuthToken)
+}
+
 export const loginAction = (username, password) => dispatch => {
   dispatch(authRequest());
   return (
