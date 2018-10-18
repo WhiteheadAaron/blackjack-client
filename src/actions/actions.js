@@ -1,77 +1,86 @@
-export const IN_GAME = 'IN_GAME';
-export const inGame = (value) => {
-    return {
-        type: IN_GAME,
-        value
-    };
-}
+import { API_BASE_URL } from "../config";
 
-export const TAKE_CARD = 'TAKE_CARD';
-export const takeCard = (value) => {
-    return {
-        type: TAKE_CARD,
-        value
-    };
-}
+export const IN_GAME = "IN_GAME";
+export const inGame = value => {
+  return {
+    type: IN_GAME,
+    value
+  };
+};
 
-export const DEALER_CARD = 'DEALER_CARD'
-export const dealerCard = (value) => {
-    return {
-        type: DEALER_CARD,
-        value
-    }
-}
+export const TAKE_CARD = "TAKE_CARD";
+export const takeCard = value => {
+  return {
+    type: TAKE_CARD,
+    value
+  };
+};
 
-export const NEW_GAME = 'NEW_GAME';
-export const newGame = (value) => {
-    return {
-        type: NEW_GAME,
-        value
-    }
-}
+export const DEALER_CARD = "DEALER_CARD";
+export const dealerCard = value => {
+  return {
+    type: DEALER_CARD,
+    value
+  };
+};
+
+export const NEW_GAME = "NEW_GAME";
+export const newGame = value => {
+  return {
+    type: NEW_GAME,
+    value
+  };
+};
 
 export const REMOVE_ACE = "REMOVE_ACE";
-export const removeAce = (value) => {
-    return {
-        type: REMOVE_ACE,
-        value
-    }
-}
+export const removeAce = value => {
+  return {
+    type: REMOVE_ACE,
+    value
+  };
+};
 
 export const REMOVE_DEALER_ACE = "REMOVE_DEALER_ACE";
-export const removeDealerAce = (value) => {
-    return {
-        type: REMOVE_DEALER_ACE,
-        value
-    }
-}
+export const removeDealerAce = value => {
+  return {
+    type: REMOVE_DEALER_ACE,
+    value
+  };
+};
 
-export const fetchStatsRequest = (value) => {
-    return {
-        type: 'GET_STATS',
-        value
-    };
+export const fetchStatsRequest = value => {
+  return {
+    type: "GET_STATS",
+    value
+  };
 };
 
 export const fetchStatsSuccess = value => {
-    return {
-        type: 'GET_STATS_SUCCESS',
-        value
-    }
-}
+  return {
+    type: "GET_STATS_SUCCESS",
+    value
+  };
+};
 
 export const fetchStatsError = value => {
-    return {
-        type: 'GET_STATS_ERROR',
-        value
+  return {
+    type: "GET_STATS_ERROR",
+    value
+  };
+};
+
+export const getStatsAction = authToken => dispatch => {
+  console.log(authToken);
+  dispatch(fetchStatsRequest());
+  fetch(`${API_BASE_URL}/stats`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + authToken
     }
-}
-
-export const getStatsAction = () => dispatch => {
-    dispatch(fetchStatsRequest())
-    fetch('https://blackjack-app-server.herokuapp.com/stats')
-        .then(res => res.json()) 
-        .then(res => dispatch(fetchStatsSuccess(res[0]))) 
-        .catch(err => dispatch(fetchStatsError()));
-}
-
+  })
+    .then(res => res.json())
+    .then(res => dispatch(fetchStatsSuccess(res[0])))
+    .catch(err => dispatch(fetchStatsError()));
+};

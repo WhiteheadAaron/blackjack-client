@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loginAction } from "../actions/auth";
-import { registerAction, statAction, stat } from "../actions/register";
+import { registerAction } from "../actions/register";
 
 export function Login(props) {
   return (

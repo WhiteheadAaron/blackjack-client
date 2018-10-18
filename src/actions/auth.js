@@ -1,6 +1,7 @@
 import jwtDecode from "jwt-decode";
 
 import { API_BASE_URL } from "../config";
+import { getStatsAction } from './actions';
 
 const saveAuthToken = authToken => {
   try {
@@ -67,7 +68,12 @@ export const loginAction = (username, password) => dispatch => {
       })
     })
       .then(res => res.json())
-      .then(({ authToken }) => storeAuthInfo(authToken, dispatch))
+      .then(({ authToken }) => {
+        storeAuthInfo(authToken, dispatch)
+        console.log(authToken)
+        return authToken;
+      })
+      .then((authToken) => dispatch(getStatsAction(authToken)))
       .catch(err => {
         const { code } = err;
         const message =
