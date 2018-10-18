@@ -28,7 +28,7 @@ export function Login(props) {
             className="loginForm"
             onSubmit={e => {
               e.preventDefault();
-              let username = e.target.username.value;
+              let username = e.target.username.value.toLowerCase();
               let password = e.target.password.value;
               props.dispatch(loginAction(username, password));
             }}
@@ -46,7 +46,7 @@ export function Login(props) {
             className="registerForm"
             onSubmit={e => {
               e.preventDefault();
-              let username = e.target.username.value;
+              let username = e.target.username.value.toLowerCase();
               let password = e.target.password.value;
               let played = 0;
               let wins = 0;
