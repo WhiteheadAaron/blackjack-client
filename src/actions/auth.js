@@ -73,7 +73,7 @@ export const loginAction = (username, password) => dispatch => {
         console.log(authToken)
         return authToken;
       })
-      // .then((authToken) => dispatch(getStatsAction(authToken)))
+      .then((authToken) => dispatch(getStatsAction(authToken)))
       .catch(err => {
         const { code } = err;
         const message =

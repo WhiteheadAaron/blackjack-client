@@ -8,6 +8,15 @@ export const inGame = value => {
   };
 };
 
+export const GAME_OVER = "GAME_OVER";
+export const gameOver = value => {
+  return {
+    type: GAME_OVER,
+    value
+  };
+};
+
+
 export const TAKE_CARD = "TAKE_CARD";
 export const takeCard = value => {
   return {
@@ -68,6 +77,22 @@ export const fetchStatsError = value => {
     value
   };
 };
+
+export const STAT_WIN = 'STAT_WIN';
+export const statWin = value => {
+  return {
+    type: STAT_WIN,
+    value
+  }
+}
+
+export const STAT_LOSS = 'STAT_LOSS';
+export const statLoss = value => {
+  return {
+    type: STAT_LOSS,
+    value
+  }
+}
 
 export const getStatsAction = authToken => dispatch => {
   console.log(authToken);

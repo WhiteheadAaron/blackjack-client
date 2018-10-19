@@ -5,11 +5,114 @@ import {
   inGame,
   dealerCard,
   newGame,
-  removeAce
+  gameOver,
+  removeAce,
+  removeDealerAce,
+  getStatsAction,
+  statWin,
+  statLoss
 } from "../actions/actions";
-import { statAction } from '../actions/register';
+import { statAction } from "../actions/register";
+import { resultAction } from "../actions/results";
 
 export function Player(props) {
+  const checkCards = () => {
+    let dealerValue = 0;
+    let dealerValue2 = 0;
+    let dealerValue3 = 0;
+    let card;
+    let card2;
+    let card3;
+    let card4;
+    let images = props.images;
+    if (dealerPointCount() < 17) {
+      console.log(dealerPointCount());
+      card = images[Number(Math.floor(Math.random() * images.length))];
+      props.dispatch(dealerCard(card));
+      dealerValue = card.value;
+      images = images.filter(item => item.src !== card.src);
+      if (dealerPointCount() + dealerValue < 17) {
+        card2 = images[Number(Math.floor(Math.random() * images.length))];
+        props.dispatch(dealerCard(card2));
+        dealerValue2 = dealerValue + card2.value;
+        images = images.filter(item => item.src !== card2.src);
+        if (dealerPointCount() + dealerValue2 < 17) {
+          card3 = images[Number(Math.floor(Math.random() * images.length))];
+          props.dispatch(dealerCard(card3));
+          dealerValue3 = dealerValue2 + card3.value;
+          images = images.filter(item => item.src !== card3.src);
+          if (dealerPointCount() + dealerValue3 < 17) {
+            card4 = images[Number(Math.floor(Math.random() * images.length))];
+            props.dispatch(dealerCard(card4));
+            images = images.filter(item => item.src !== card4.src);
+          }
+
+          if (dealerPointCount() + dealerValue3 > 21) {
+            if (props.dPoints.includes(11) || card3.value === 11) {
+              props.dispatch(removeDealerAce());
+            }
+          }
+        }
+        if (dealerPointCount() + dealerValue2 > 21) {
+          if (props.dPoints.includes(11) || card2.value === 11) {
+            props.dispatch(removeDealerAce());
+          }
+        }
+      }
+      if (dealerPointCount() + dealerValue > 21) {
+        if (props.dPoints.includes(11) || card.value === 11) {
+          props.dispatch(removeDealerAce());
+        }
+      }
+      return dealerPointCount() + dealerValue + dealerValue2 + dealerValue3;
+    }
+    if (dealerPointCount() > 21) {
+      if (props.dPoints.includes(11) || dealerValue === 11) {
+        props.dispatch(removeDealerAce());
+      }
+    }
+  };
+  const winning = () => {
+    console.log("win");
+    props.dispatch(inGame("results"));
+    props.dispatch(gameOver("win"));
+    props.dispatch(getStatsAction(props.authToken));
+    let newPlayed = props.played + 1;
+    let newWins = props.wins + 1;
+    props.dispatch(
+      resultAction(
+        newPlayed,
+        newWins,
+        props.losses,
+        props.user.id,
+        props.user.username,
+        props.authToken,
+        props.statId
+      )
+    );
+    props.dispatch(statWin());
+  };
+
+  const losing = () => {
+    console.log("loss");
+    props.dispatch(inGame("results"));
+    props.dispatch(gameOver("loss"));
+    props.dispatch(getStatsAction(props.authToken));
+    let newPlayed = props.played + 1;
+    let newLosses = props.losses + 1;
+    props.dispatch(
+      resultAction(
+        newPlayed,
+        props.wins,
+        newLosses,
+        props.user.id,
+        props.user.username,
+        props.authToken,
+        props.statId
+      )
+    );
+    props.dispatch(statLoss());
+  };
   const faceDown = require(`../images/deck.jpg`);
   console.log(playerPointCount());
 
@@ -21,17 +124,18 @@ export function Player(props) {
     return total;
   }
 
+  const dealerPointCount = () => {
+    let total = 0;
+    for (let i = 0; i < props.dPoints.length; i++) {
+      total = total + props.dPoints[i];
+    }
+    return total;
+  };
+
   if (props.inGame === false) {
     return (
       <button
         onClick={() => {
-          console.log(props)
-          let played = 0;
-          let wins = 0;
-          let losses = 0;
-          // props.dispatch(
-          //   statAction(played, wins, losses, props.user.id, props.user.username, props.authToken)
-          // );
           props.dispatch(newGame());
           let images = props.images;
           let card1 = images[Number(Math.floor(Math.random() * images.length))];
@@ -90,12 +194,14 @@ export function Player(props) {
               ];
             props.dispatch(takeCard(card));
             let newValue = playerPointCount() + card.value;
+
             if (newValue > 21) {
               if (props.pPoints.includes(11) || card.value === 11) {
                 props.dispatch(removeAce());
               }
               if (!props.pPoints.includes(11) && card.value !== 11) {
-                props.dispatch(inGame("results"));
+                checkCards();
+                losing();
               }
             }
           }}
@@ -105,7 +211,28 @@ export function Player(props) {
         <button
           className="stayButton"
           onClick={() => {
-            props.dispatch(inGame("results"));
+            return Promise.all([checkCards()]).then((value) => {
+              console.log(props.dPoints)
+              if (
+                value > playerPointCount() &&
+                value <= 21
+              ) {
+                console.log(value, playerPointCount());
+                losing();
+              }
+
+              if (
+                value < playerPointCount() ||
+                (value > 21 && playerPointCount() <= 21)
+              ) {
+                console.log(
+                  value,
+                  playerPointCount(),
+                  props.dPoints
+                );
+                winning();
+              }
+            });
           }}
         >
           Stay

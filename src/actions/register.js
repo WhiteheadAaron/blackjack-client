@@ -51,7 +51,7 @@ export const registerAction = (username, password) => dispatch => {
   );
 };
 
-export const STAT = "REGISTER";
+export const STAT = "STAT";
 export const stat = value => ({
   type: STAT,
   value
@@ -72,6 +72,22 @@ export const statError = value => {
     value
   };
 };
+
+export const STAT_WIN = 'STAT_WIN';
+export const statWin = value => {
+  return {
+    type: STAT_WIN,
+    value
+  }
+}
+
+export const STAT_LOSS = 'STAT_LOSS';
+export const statLoss = value => {
+  return {
+    type: STAT_LOSS,
+    value
+  }
+}
 
 export const statAction = (
   played,
