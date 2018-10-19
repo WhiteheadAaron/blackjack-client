@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../config";
-import { loginAction } from './auth';
+import { loginAction } from "./auth";
 
 export const REGISTER = "REGISTER";
 export const register = value => ({
@@ -23,22 +23,32 @@ export const registerError = value => {
   };
 };
 
-export const registerAction = (username, password, played, wins, losses) => dispatch => {
-  return fetch(`${API_BASE_URL}/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      username,
-      password 
+export const registerAction = (username, password) => dispatch => {
+  return (
+    fetch(`${API_BASE_URL}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
     })
-  })
-    .then(res => res.json())
-    .then(res => dispatch(registerSuccess(res)))
-    .then(res => dispatch(statAction(played, wins, losses, res.value.id)))
-    .then(res => dispatch(loginAction(username, password)))
-    .catch(err => dispatch(registerError(err)));
+      .then(res => res.json())
+      .then(res => {
+        dispatch(registerSuccess(res));
+        return res;
+      })
+      .then(res => {
+        dispatch(loginAction(username, password));
+        return res;
+      })
+      // .then(res =>
+      //   dispatch(statAction(played, wins, losses, res.id))
+      // )
+      .catch(err => dispatch(registerError(err)))
+  );
 };
 
 export const STAT = "REGISTER";
@@ -63,23 +73,30 @@ export const statError = value => {
   };
 };
 
-export const statAction = (played, wins, losses, userId) => dispatch => {
-  return (
-    fetch(`${API_BASE_URL}/stats`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        played,
-        wins,
-        losses,
-        userId
-      })
+export const statAction = (
+  played,
+  wins,
+  losses,
+  userId,
+  username,
+  authToken
+) => dispatch => {
+  return fetch(`${API_BASE_URL}/stats`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + authToken
+    },
+    body: JSON.stringify({
+      played,
+      wins,
+      losses,
+      userId,
+      username
     })
-      .then(res => res.json())
-      .then(res => console.log(res))
-      .then(res => dispatch(statSuccess(res)))
-      .catch(err => dispatch(statError()))
-  );
+  })
+    .then(res => res.json())
+    .then(res => console.log(res))
+    .then(res => dispatch(statSuccess(res)))
+    .catch(err => dispatch(statError()));
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loginAction } from "../actions/auth";
-import { registerAction } from "../actions/register";
+import { registerAction, statAction } from "../actions/register";
 
 export function Login(props) {
   return (
@@ -35,7 +35,7 @@ export function Login(props) {
           >
             <label>Login</label>
             <input type="text" name="username" placeholder="Username" />
-            <input type="text" name="password" placeholder="Password" />
+            <input type="password" name="password" placeholder="Password" />
             <button type="submit" className="signInSubmit">
               Submit
             </button>
@@ -48,11 +48,12 @@ export function Login(props) {
               e.preventDefault();
               let username = e.target.username.value.toLowerCase();
               let password = e.target.password.value;
-              let played = 0;
-              let wins = 0;
-              let losses = 0;
               if (password === e.target.password2.value) {
-                props.dispatch(registerAction(username, password, played, wins, losses));
+                props.dispatch(registerAction(username, password))
+                .then((user) => {
+                  console.log(props, user)
+                  props.dispatch(statAction(0, 0, 0, user.id, username, props.authToken))
+                })
               }
               else {
                 console.log('passwords must match')
@@ -61,9 +62,9 @@ export function Login(props) {
           >
             <label>Sign Up</label>
             <input type="text" name="username" placeholder="Username" />
-            <input type="text" name="password" placeholder="Password" />
+            <input type="password" name="password" placeholder="Password" />
             <input
-              type="text"
+              type="password"
               name="password2"
               placeholder="Confirm Password"
             />
@@ -78,7 +79,9 @@ export function Login(props) {
 }
 
 export const mapStateToProps = state => ({
-  inGame: state.inGame
+  inGame: state.inGame,
+  authToken: state.loginReducer.authToken,
+  user: state.loginReducer.user
 });
 
 export default connect(mapStateToProps)(Login);

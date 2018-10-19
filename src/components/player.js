@@ -7,42 +7,40 @@ import {
   newGame,
   removeAce
 } from "../actions/actions";
+import { statAction } from '../actions/register';
 
 export function Player(props) {
   const faceDown = require(`../images/deck.jpg`);
-  console.log(playerPointCount())
+  console.log(playerPointCount());
 
   function playerPointCount() {
     let total = 0;
-    for (let i=0; i < props.pPoints.length; i++) {
+    for (let i = 0; i < props.pPoints.length; i++) {
       total = total + props.pPoints[i];
     }
     return total;
-  } 
-
+  }
 
   if (props.inGame === false) {
     return (
       <button
         onClick={() => {
-          props.dispatch(newGame())
+          console.log(props)
+          let played = 0;
+          let wins = 0;
+          let losses = 0;
+          // props.dispatch(
+          //   statAction(played, wins, losses, props.user.id, props.user.username, props.authToken)
+          // );
+          props.dispatch(newGame());
           let images = props.images;
-          let card1 =
-            images[
-              Number(Math.floor(Math.random() * images.length))
-            ];
+          let card1 = images[Number(Math.floor(Math.random() * images.length))];
           props.dispatch(takeCard(card1));
-          images = images.filter(item => item.src !== card1.src)
-          let card2 =
-            images[
-              Number(Math.floor(Math.random() * images.length))
-            ];
+          images = images.filter(item => item.src !== card1.src);
+          let card2 = images[Number(Math.floor(Math.random() * images.length))];
           props.dispatch(takeCard(card2));
-          images = images.filter(item => item.src !== card2.src)
-          let card3 =
-            images[
-              Number(Math.floor(Math.random() * images.length))
-            ];
+          images = images.filter(item => item.src !== card2.src);
+          let card3 = images[Number(Math.floor(Math.random() * images.length))];
           props.dispatch(dealerCard(card3));
           props.dispatch(inGame(true));
         }}
@@ -116,7 +114,7 @@ export function Player(props) {
       </React.Fragment>
     );
   } else {
-    return '';
+    return "";
   }
 }
 
@@ -127,7 +125,6 @@ function mapStateToProps(state) {
     inGame: state.takeCardReducer.inGame,
     dealerCards: state.takeCardReducer.dealerCards,
     pPoints: state.takeCardReducer.pPoints
-    
   };
 }
 

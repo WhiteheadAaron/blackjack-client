@@ -9,22 +9,11 @@ import { connect } from "react-redux";
 import Home from "./components/home";
 
 class AppRouter extends Component {
-
-
   render() {
     return (
       <BrowserRouter>
         <React.Fragment>
           <Switch>
-            <Route
-              path="/game"
-              render={() => {
-                return (
-                  <Game/>
-                );
-              }}
-              exact={true}
-            />
             <Route path="/profile" component={Profile} exact={true} />
             <Route path="/" component={Home} />
           </Switch>
@@ -45,7 +34,8 @@ function mapStateToProps(state) {
     played: state.statReducer.played,
     wins: state.statReducer.wins,
     losses: state.statReducer.losses,
-    authToken: state.loginReducer.authToken
+    authToken: state.loginReducer.authToken,
+    user: state.loginReducer.user
   };
 }
 
