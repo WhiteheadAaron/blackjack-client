@@ -57,7 +57,7 @@ export function Login(props) {
                 })
               }
               else {
-                console.log('passwords must match')
+                console.log('passwords must match!')
               }
             }}
           >
