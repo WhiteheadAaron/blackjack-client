@@ -73,21 +73,6 @@ export const statError = value => {
   };
 };
 
-export const STAT_WIN = 'STAT_WIN';
-export const statWin = value => {
-  return {
-    type: STAT_WIN,
-    value
-  }
-}
-
-export const STAT_LOSS = 'STAT_LOSS';
-export const statLoss = value => {
-  return {
-    type: STAT_LOSS,
-    value
-  }
-}
 
 export const statAction = (
   played,

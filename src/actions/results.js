@@ -47,6 +47,7 @@ export const resultAction = (
     })
       .then(res => res.json())
       .then(res => console.log(res))
+      .then()
       .then(res => dispatch(resultSuccess(res)))
       .catch(err => dispatch(resultError()));
   };

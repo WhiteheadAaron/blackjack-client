@@ -36,7 +36,7 @@ function mapStateToProps(state) {
     losses: state.statReducer.losses,
     authToken: state.loginReducer.authToken,
     user: state.loginReducer.user,
-    statId: state.statReducer.id,
+    statId: state.statReducer.id,--------------
     gameOver: state.inGameReducer.gameOver
   };
 }
