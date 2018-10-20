@@ -18,8 +18,6 @@ import { resultAction } from "../actions/results";
 export function Player(props) {
   const checkCards = () => {
     let dealerValue = 0;
-    let dealerValue2 = 0;
-    let dealerValue3 = 0;
     let card;
     let card2;
     let card3;
@@ -34,26 +32,27 @@ export function Player(props) {
       if (dealerPointCount() + dealerValue < 17) {
         card2 = images[Number(Math.floor(Math.random() * images.length))];
         props.dispatch(dealerCard(card2));
-        dealerValue2 = dealerValue + card2.value;
+        dealerValue = dealerValue + card2.value;
         images = images.filter(item => item.src !== card2.src);
-        if (dealerPointCount() + dealerValue2 < 17) {
+        if (dealerPointCount() + dealerValue < 17) {
           card3 = images[Number(Math.floor(Math.random() * images.length))];
           props.dispatch(dealerCard(card3));
-          dealerValue3 = dealerValue2 + card3.value;
+          dealerValue = dealerValue + card3.value;
           images = images.filter(item => item.src !== card3.src);
-          if (dealerPointCount() + dealerValue3 < 17) {
+          if (dealerPointCount() + dealerValue < 17) {
             card4 = images[Number(Math.floor(Math.random() * images.length))];
             props.dispatch(dealerCard(card4));
             images = images.filter(item => item.src !== card4.src);
+            dealerValue = dealerValue + card4.value
           }
 
-          if (dealerPointCount() + dealerValue3 > 21) {
+          if (dealerPointCount() + dealerValue > 21) {
             if (props.dPoints.includes(11) || card3.value === 11) {
               props.dispatch(removeDealerAce());
             }
           }
         }
-        if (dealerPointCount() + dealerValue2 > 21) {
+        if (dealerPointCount() + dealerValue > 21) {
           if (props.dPoints.includes(11) || card2.value === 11) {
             props.dispatch(removeDealerAce());
           }
@@ -64,7 +63,7 @@ export function Player(props) {
           props.dispatch(removeDealerAce());
         }
       }
-      return dealerPointCount() + dealerValue + dealerValue2 + dealerValue3;
+      return [dealerPointCount(), dealerValue];
     }
     if (dealerPointCount() > 21) {
       if (props.dPoints.includes(11) || dealerValue === 11) {
@@ -211,28 +210,50 @@ export function Player(props) {
         <button
           className="stayButton"
           onClick={() => {
-            return Promise.all([checkCards()]).then((value) => {
-              console.log(props.dPoints)
+            const myFunction = async () => {
+              const myScore = await checkCards();
+              const dScore = myScore.reduce((sum, val) => sum + val, 0)
               if (
-                value > playerPointCount() &&
-                value <= 21
+                dScore > playerPointCount() &&
+                dScore <= 21
               ) {
-                console.log(value, playerPointCount());
+                console.log(dScore, playerPointCount());
                 losing();
               }
-
               if (
-                value < playerPointCount() ||
-                (value > 21 && playerPointCount() <= 21)
+                dScore < playerPointCount() ||
+                (dScore > 21 && playerPointCount() <= 21)
               ) {
                 console.log(
-                  value,
+                  dScore,
                   playerPointCount(),
                   props.dPoints
                 );
                 winning();
               }
-            });
+            }
+            myFunction()
+            // return Promise.all([checkCards()]).then((value) => {
+            //   console.log(props.dPoints)
+            //   if (
+            //     dealerPointCount() > playerPointCount() &&
+            //     value <= 21
+            //   ) {
+            //     console.log(value, playerPointCount());
+            //     losing();
+            //   }
+            //   if (
+            //     value < playerPointCount() ||
+            //     (value > 21 && playerPointCount() <= 21)
+            //   ) {
+            //     console.log(
+            //       value,
+            //       playerPointCount(),
+            //       props.dPoints
+            //     );
+            //     winning();
+            //   }
+            // });
           }}
         >
           Stay
