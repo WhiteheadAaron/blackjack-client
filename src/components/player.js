@@ -251,16 +251,15 @@ export function Player(props) {
               }
             }
             if (newValue === 21) {
-              const dealerScoreFunction = async () => {
-                const dScore = await dealerCardsFunction();
+
+                const dScore = dealerCardsFunction();
                 if (dScore === 21) {
                   tying();
                 }
                 else {
                   winning();
                 }
-              }
-              dealerScoreFunction();
+
             }
           }}
         >
