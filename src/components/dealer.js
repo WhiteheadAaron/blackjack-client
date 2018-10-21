@@ -5,58 +5,11 @@ import {
   newGame,
   takeCard,
   inGame,
-  removeDealerAce,
-  getStatsAction,
-  statWin,
-  statLoss,
   gameOver
 } from "../actions/actions";
 
-import { resultAction } from "../actions/results";
 
 export class Dealer extends Component {
-  old = this.props;
-  old2 = this.state;
-
-  componentDidUpdate(old, old2) {
-    if (old.data !== this.props.data) {
-      if (this.props.gameOver === "loss") {
-        console.log("lossssssssssss");
-        this.props.dispatch(getStatsAction(this.props.authToken));
-        let newPlayed = this.props.played + 1;
-        let newLosses = this.props.losses + 1;
-        this.props.dispatch(
-          resultAction(
-            newPlayed,
-            this.props.wins,
-            newLosses,
-            this.props.user.id,
-            this.props.user.username,
-            this.props.authToken,
-            this.props.statId
-          )
-        );
-        this.props.dispatch(statLoss());
-      }
-      if (this.props.gameOver === "win") {
-        this.props.dispatch(getStatsAction(this.props.authToken));
-        let newPlayed = this.props.played + 1;
-        let newWins = this.props.wins + 1;
-        this.props.dispatch(
-          resultAction(
-            newPlayed,
-            newWins,
-            this.props.losses,
-            this.props.user.id,
-            this.props.user.username,
-            this.props.authToken,
-            this.props.statId
-          )
-        );
-        this.props.dispatch(statWin());
-      }
-    }
-  }
 
   renderDealerCards = () => {
     let newArr = [];

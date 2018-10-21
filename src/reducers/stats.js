@@ -1,6 +1,7 @@
 const initialState = {
     wins: 0,
     losses: 0,
+    ties: 0,
     played: 0,
     id: null,
     loading: false,
@@ -26,6 +27,7 @@ const statReducer = (state = initialState, action) => {
             wins: action.value.wins,
             losses: action.value.losses,
             played: action.value.played,
+            ties: action.value.ties,
             id: action.value.id
         });
     }
@@ -34,7 +36,6 @@ const statReducer = (state = initialState, action) => {
             loading: false,
             error: null,
             wins: state.wins + 1,
-            losses: state.losses,
             played: state.played + 1
         });
     }
@@ -42,9 +43,16 @@ const statReducer = (state = initialState, action) => {
         return Object.assign({}, state, {
             loading: false,
             error: null,
-            wins: state.wins,
             losses: state.losses + 1,
             played: state.played + 1
+        });
+    }
+    if (action.type === 'STAT_TIE') {
+        return Object.assign({}, state, {
+            loading: false,
+            error: null,
+            played: state.played + 1,
+            ties: state.ties + 1
         });
     }
     

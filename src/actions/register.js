@@ -44,9 +44,6 @@ export const registerAction = (username, password) => dispatch => {
         dispatch(loginAction(username, password));
         return res;
       })
-      // .then(res =>
-      //   dispatch(statAction(played, wins, losses, res.id))
-      // )
       .catch(err => dispatch(registerError(err)))
   );
 };
@@ -78,6 +75,7 @@ export const statAction = (
   played,
   wins,
   losses,
+  ties,
   userId,
   username,
   authToken
@@ -92,6 +90,7 @@ export const statAction = (
       played,
       wins,
       losses,
+      ties,
       userId,
       username
     })

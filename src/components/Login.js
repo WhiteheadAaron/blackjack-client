@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { loginAction } from "../actions/auth";
 import { registerAction, statAction } from "../actions/register";
-import { getStatsAction } from '../actions/actions';
 
 export function Login(props) {
   return (
@@ -53,7 +52,7 @@ export function Login(props) {
                 props.dispatch(registerAction(username, password))
                 .then((user) => {
                   console.log(props, user)
-                  props.dispatch(statAction(0, 0, 0, user.id, username, props.authToken))
+                  props.dispatch(statAction(0, 0, 0, 0, user.id, username, props.authToken))
                 })
               }
               else {

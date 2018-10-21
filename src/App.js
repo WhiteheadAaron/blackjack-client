@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import "./components/login.css";
 import "./components/game.css";
-import Game from "./components/Game";
 import Profile from "./components/Profile";
 import { connect } from "react-redux";
 import Home from "./components/home";
@@ -34,9 +33,10 @@ function mapStateToProps(state) {
     played: state.statReducer.played,
     wins: state.statReducer.wins,
     losses: state.statReducer.losses,
+    ties: state.statReducer.ties,
     authToken: state.loginReducer.authToken,
     user: state.loginReducer.user,
-    statId: state.statReducer.id,--------------
+    statId: state.statReducer.id,
     gameOver: state.inGameReducer.gameOver
   };
 }

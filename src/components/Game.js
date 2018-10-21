@@ -5,20 +5,14 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutAction, removeAuth } from '../actions/auth';
 import { newGame, inGame, getStatsAction } from '../actions/actions';
-import { statAction } from '../actions/register';
 
 export function Game(props) {
   return (
     <div className="gameBack">
       <div className="gameGrid">
         <Link className="profile" to="/profile">
-          <button className="profileButton" onClick={() => {
-            console.log(props)
-            // props.dispatch(statAction(0, 0, 0, props.user.id, props.authToken))
-          
+          <button className="profileButton" onClick={() => {         
               props.dispatch(getStatsAction(props.authToken))
-            
-            
           }}>
             My Profile
           </button>
@@ -39,7 +33,6 @@ export function Game(props) {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     images: state.takeCardReducer.images,
     playerCards: state.takeCardReducer.playerCards,
@@ -50,6 +43,7 @@ function mapStateToProps(state) {
     played: state.statReducer.played,
     wins: state.statReducer.wins,
     losses: state.statReducer.losses,
+    ties: state.statReducer.ties,
     authToken: state.loginReducer.authToken,
     user: state.loginReducer.user,
     statId: state.statReducer.id

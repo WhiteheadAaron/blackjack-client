@@ -94,8 +94,15 @@ export const statLoss = value => {
   }
 }
 
+export const STAT_TIE = 'STAT_TIE';
+export const statTie = value => {
+  return {
+    type: STAT_TIE,
+    value
+  }
+}
+
 export const getStatsAction = authToken => dispatch => {
-  console.log(authToken);
   dispatch(fetchStatsRequest());
   fetch(`${API_BASE_URL}/stats`, {
     method: "GET",
@@ -108,4 +115,6 @@ export const getStatsAction = authToken => dispatch => {
     .then(res => res.json())
     .then(res => dispatch(fetchStatsSuccess(res[0])))
     .catch(err => dispatch(fetchStatsError()));
+
+    
 };

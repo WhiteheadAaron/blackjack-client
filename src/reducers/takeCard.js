@@ -1,4 +1,10 @@
-import { TAKE_CARD, DEALER_CARD, NEW_GAME, REMOVE_ACE, REMOVE_DEALER_ACE } from "../actions/actions";
+import {
+  TAKE_CARD,
+  DEALER_CARD,
+  NEW_GAME,
+  REMOVE_ACE,
+  REMOVE_DEALER_ACE
+} from "../actions/actions";
 
 const initialState = {
   images: [
@@ -213,8 +219,6 @@ const initialState = {
   ],
   playerCards: [],
   dealerCards: [],
-  playerPoints: 0,
-  dealerPoints: 0,
   inGame: true,
   pPoints: [],
   dPoints: []
@@ -225,15 +229,13 @@ const takeCardReducer = (state = initialState, action) => {
     return Object.assign({}, state, {
       playerCards: [...state.playerCards, action.value],
       images: state.images.filter(item => item.src !== action.value.src),
-      playerPoints: state.playerPoints + action.value.value,
       pPoints: [...state.pPoints, action.value.value]
     });
-  } 
+  }
   if (action.type === DEALER_CARD) {
     return Object.assign({}, state, {
       dealerCards: [...state.dealerCards, action.value],
       images: state.images.filter(item => item.src !== action.value.src),
-      dealerPoints: state.dealerPoints + action.value.value,
       dPoints: [...state.dPoints, action.value.value]
     });
   }
@@ -451,37 +453,25 @@ const takeCardReducer = (state = initialState, action) => {
           src: "kingclubs"
         }
       ],
-      dealerPoints: 0,
-      playerPoints: 0,
       pPoints: [],
       dPoints: []
     });
   }
+
+
   if (action.type === REMOVE_ACE) {
-    let newArr;
-    for (let i = 0; i < state.pPoints.length; i++) {
-      if (state.pPoints[i] === 11) {
-        newArr = state.pPoints.splice(i, 1)
-      }
-    }
+    console.log(action)
     return Object.assign({}, state, {
-      pPoints: newArr,
-      pPoints: [...state.pPoints, 1]
-    })
+      pPoints: action.value
+    });
   }
+
+
   if (action.type === REMOVE_DEALER_ACE) {
-    let newArr;
-    for (let i = 0; i < state.dPoints.length; i++) {
-      if (state.dPoints[i] === 11) {
-        newArr = state.dPoints.splice(i, 1)
-      }
-    }
     return Object.assign({}, state, {
-      dPoints: newArr,
-      dPoints: [...state.dPoints, 1]
-    })
-  }
-  else {
+      dPoints: action.value
+    });
+  } else {
     return state;
   }
 };

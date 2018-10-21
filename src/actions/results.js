@@ -26,6 +26,7 @@ export const resultAction = (
     played,
     wins,
     losses,
+    ties,
     userId,
     username,
     authToken,
@@ -41,6 +42,7 @@ export const resultAction = (
         played,
         wins,
         losses,
+        ties,
         userId,
         username
       })

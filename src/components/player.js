@@ -10,111 +10,12 @@ import {
   removeDealerAce,
   getStatsAction,
   statWin,
-  statLoss
+  statLoss,
+  statTie
 } from "../actions/actions";
-import { statAction } from "../actions/register";
 import { resultAction } from "../actions/results";
 
 export function Player(props) {
-  const checkCards = () => {
-    let dealerValue = 0;
-    let card;
-    let card2;
-    let card3;
-    let card4;
-    let images = props.images;
-    if (dealerPointCount() < 17) {
-      console.log(dealerPointCount());
-      card = images[Number(Math.floor(Math.random() * images.length))];
-      props.dispatch(dealerCard(card));
-      dealerValue = card.value;
-      images = images.filter(item => item.src !== card.src);
-      if (dealerPointCount() + dealerValue < 17) {
-        card2 = images[Number(Math.floor(Math.random() * images.length))];
-        props.dispatch(dealerCard(card2));
-        dealerValue = dealerValue + card2.value;
-        images = images.filter(item => item.src !== card2.src);
-        if (dealerPointCount() + dealerValue < 17) {
-          card3 = images[Number(Math.floor(Math.random() * images.length))];
-          props.dispatch(dealerCard(card3));
-          dealerValue = dealerValue + card3.value;
-          images = images.filter(item => item.src !== card3.src);
-          if (dealerPointCount() + dealerValue < 17) {
-            card4 = images[Number(Math.floor(Math.random() * images.length))];
-            props.dispatch(dealerCard(card4));
-            images = images.filter(item => item.src !== card4.src);
-            dealerValue = dealerValue + card4.value
-          }
-
-          if (dealerPointCount() + dealerValue > 21) {
-            if (props.dPoints.includes(11) || card3.value === 11) {
-              props.dispatch(removeDealerAce());
-            }
-          }
-        }
-        if (dealerPointCount() + dealerValue > 21) {
-          if (props.dPoints.includes(11) || card2.value === 11) {
-            props.dispatch(removeDealerAce());
-          }
-        }
-      }
-      if (dealerPointCount() + dealerValue > 21) {
-        if (props.dPoints.includes(11) || card.value === 11) {
-          props.dispatch(removeDealerAce());
-        }
-      }
-      return [dealerPointCount(), dealerValue];
-    }
-    if (dealerPointCount() > 21) {
-      if (props.dPoints.includes(11) || dealerValue === 11) {
-        props.dispatch(removeDealerAce());
-      }
-    }
-  };
-  const winning = () => {
-    console.log("win");
-    props.dispatch(inGame("results"));
-    props.dispatch(gameOver("win"));
-    props.dispatch(getStatsAction(props.authToken));
-    let newPlayed = props.played + 1;
-    let newWins = props.wins + 1;
-    props.dispatch(
-      resultAction(
-        newPlayed,
-        newWins,
-        props.losses,
-        props.user.id,
-        props.user.username,
-        props.authToken,
-        props.statId
-      )
-    );
-    props.dispatch(statWin());
-  };
-
-  const losing = () => {
-    console.log("loss");
-    props.dispatch(inGame("results"));
-    props.dispatch(gameOver("loss"));
-    props.dispatch(getStatsAction(props.authToken));
-    let newPlayed = props.played + 1;
-    let newLosses = props.losses + 1;
-    props.dispatch(
-      resultAction(
-        newPlayed,
-        props.wins,
-        newLosses,
-        props.user.id,
-        props.user.username,
-        props.authToken,
-        props.statId
-      )
-    );
-    props.dispatch(statLoss());
-  };
-  const faceDown = require(`../images/deck.jpg`);
-  console.log(playerPointCount());
-
   function playerPointCount() {
     let total = 0;
     for (let i = 0; i < props.pPoints.length; i++) {
@@ -130,6 +31,138 @@ export function Player(props) {
     }
     return total;
   };
+
+  const getNewCard = async (newArr, images) => {
+    console.log(newArr, images)
+    let pointTotal = newArr.reduce((sum, val) => sum + val, 0);
+    console.log(pointTotal);
+    let card;
+    if (pointTotal < 17) {
+      card = images[Math.floor(Math.random() * images.length)];
+      props.dispatch(dealerCard(card));
+      images = images.filter(item => item !== card.src)
+      return {
+        inputValue: [...newArr, card.value],
+        images
+      };
+    }
+    if (pointTotal > 21) {
+      if (newArr.includes(11)) {
+        let anArray = newArr;
+        let newArr2 = anArray.filter(item => item === 11);
+        newArr2[0] = 1;
+        let newArr3 = anArray.filter(item => item !== 11);
+        let inputValue = newArr3.concat(newArr2);
+        props.dispatch(removeDealerAce(inputValue));
+        return {
+          inputValue,
+          images
+        }
+      }
+      return {
+        inputValue: newArr,
+        images
+      };
+    }
+    return {
+      inputValue: newArr,
+      images
+    };
+  };
+
+  const dealerCardsFunction = async () => {
+    const value = await dealerPointCount();
+    let images = props.images;
+    let newArr = [value];
+    console.log(newArr)
+    const value1 = await getNewCard(newArr, images);
+    newArr = value1.inputValue;
+    const value2 = await getNewCard(newArr, images);
+    newArr = value2.inputValue;
+    const value3 = await getNewCard(newArr, images);
+    newArr = value3.inputValue;
+    const value4 = await getNewCard(newArr, images);
+    newArr = value4.inputValue;
+    const value5 = await getNewCard(newArr, images);
+    newArr = value5.inputValue;
+    const value6 = await getNewCard(newArr, images);
+    newArr = value6.inputValue;
+    const value7 = await getNewCard(newArr, images);
+    newArr = value7.inputValue;
+    const value8 = await getNewCard(newArr, images);
+    newArr = value8.inputValue;
+    const value9 = await getNewCard(newArr, images);
+    newArr = value9.inputValue;
+    const value10 = await getNewCard(newArr, images);
+    return value10.inputValue.reduce((sum, val) => sum + val, 0);
+  };
+
+  const winning = async () => {
+    props.dispatch(inGame("results"));
+    props.dispatch(gameOver("win"));
+    await props.dispatch(getStatsAction(props.authToken));
+    let newPlayed = (await props.played) + 1;
+    let newWins = (await props.wins) + 1;
+    props.dispatch(
+      resultAction(
+        newPlayed,
+        newWins,
+        props.losses,
+        props.ties,
+        props.user.id,
+        props.user.username,
+        props.authToken,
+        props.statId
+      )
+    );
+    props.dispatch(statWin());
+    props.dispatch(getStatsAction(props.authToken));
+  };
+
+  const losing = async () => {
+    props.dispatch(inGame("results"));
+    props.dispatch(gameOver("loss"));
+    await props.dispatch(getStatsAction(props.authToken));
+    let newPlayed = (await props.played) + 1;
+    let newLosses = (await props.losses) + 1;
+    props.dispatch(
+      resultAction(
+        newPlayed,
+        props.wins,
+        newLosses,
+        props.ties,
+        props.user.id,
+        props.user.username,
+        props.authToken,
+        props.statId
+      )
+    );
+    props.dispatch(statLoss());
+    props.dispatch(getStatsAction(props.authToken));
+  };
+
+  const tying = async () => {
+    props.dispatch(inGame("results"));
+    props.dispatch(gameOver("tie"));
+    await props.dispatch(getStatsAction(props.authToken));
+    let newPlayed = (await props.played) + 1;
+    let newTies = (await props.ties) + 1;
+    props.dispatch(
+      resultAction(
+        newPlayed,
+        props.wins,
+        props.losses,
+        newTies,
+        props.user.id,
+        props.user.username,
+        props.authToken,
+        props.statId
+      )
+    );
+    props.dispatch(statTie());
+    props.dispatch(getStatsAction(props.authToken));
+  };
+  const faceDown = require(`../images/deck.jpg`);
 
   if (props.inGame === false) {
     return (
@@ -153,12 +186,21 @@ export function Player(props) {
     );
   }
 
-  if (props.inGame === true && playerPointCount() === 22) {
-    props.dispatch(removeAce());
+  if (props.inGame === true && playerPointCount() === 22 && props.playerCards.length === 2) {
+    props.dispatch(removeAce([1, 11]));
   }
 
   if (props.inGame === true && playerPointCount() === 21) {
-    props.dispatch(inGame("results"));
+
+      const dScore = dealerCardsFunction();
+      if (dScore === 21) {
+        tying();
+      }
+      if (dScore !== 21) {
+        winning();
+      }
+    
+
   }
 
   if (props.inGame === true && playerPointCount() <= 21) {
@@ -196,12 +238,29 @@ export function Player(props) {
 
             if (newValue > 21) {
               if (props.pPoints.includes(11) || card.value === 11) {
-                props.dispatch(removeAce());
+                let anArray = [...props.pPoints, card.value];
+                let newArr = anArray.filter(item => item === 11);
+                newArr[0] = 1;
+                let newArr2 = anArray.filter(item => item !== 11);
+                let newPlayerPoints = newArr2.concat(newArr);
+                props.dispatch(removeAce(newPlayerPoints));
               }
               if (!props.pPoints.includes(11) && card.value !== 11) {
-                checkCards();
+                dealerCardsFunction();
                 losing();
               }
+            }
+            if (newValue === 21) {
+              const dealerScoreFunction = async () => {
+                const dScore = await dealerCardsFunction();
+                if (dScore === 21) {
+                  tying();
+                }
+                else {
+                  winning();
+                }
+              }
+              dealerScoreFunction();
             }
           }}
         >
@@ -211,12 +270,10 @@ export function Player(props) {
           className="stayButton"
           onClick={() => {
             const myFunction = async () => {
-              const myScore = await checkCards();
-              const dScore = myScore.reduce((sum, val) => sum + val, 0)
-              if (
-                dScore > playerPointCount() &&
-                dScore <= 21
-              ) {
+              const dScore = await dealerCardsFunction();
+              console.log(dScore);
+              console.log(playerPointCount());
+              if (dScore > playerPointCount() && dScore <= 21) {
                 console.log(dScore, playerPointCount());
                 losing();
               }
@@ -224,36 +281,14 @@ export function Player(props) {
                 dScore < playerPointCount() ||
                 (dScore > 21 && playerPointCount() <= 21)
               ) {
-                console.log(
-                  dScore,
-                  playerPointCount(),
-                  props.dPoints
-                );
+                console.log(dScore, playerPointCount(), props.dPoints);
                 winning();
               }
-            }
-            myFunction()
-            // return Promise.all([checkCards()]).then((value) => {
-            //   console.log(props.dPoints)
-            //   if (
-            //     dealerPointCount() > playerPointCount() &&
-            //     value <= 21
-            //   ) {
-            //     console.log(value, playerPointCount());
-            //     losing();
-            //   }
-            //   if (
-            //     value < playerPointCount() ||
-            //     (value > 21 && playerPointCount() <= 21)
-            //   ) {
-            //     console.log(
-            //       value,
-            //       playerPointCount(),
-            //       props.dPoints
-            //     );
-            //     winning();
-            //   }
-            // });
+              if (dScore === playerPointCount()) {
+                tying();
+              }
+            };
+            myFunction();
           }}
         >
           Stay
