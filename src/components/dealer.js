@@ -196,7 +196,7 @@ export class Dealer extends Component {
                   Number(Math.floor(Math.random() * this.props.images.length))
                 ];
                 this.props.dispatch(dealerCard(card3));
-                this.props.dispatch(inGame(true));
+                this.props.dispatch(inGame(false));
               }}
             >
               New Game
