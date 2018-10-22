@@ -24,20 +24,7 @@ class AppRouter extends Component {
 
 function mapStateToProps(state) {
   return {
-    images: state.takeCardReducer.images,
-    playerCards: state.takeCardReducer.playerCards,
-    inGame: state.inGameReducer.inGame,
-    dealerCards: state.takeCardReducer.dealerCards,
-    dPoints: state.takeCardReducer.dPoints,
-    pPoints: state.takeCardReducer.pPoints,
-    played: state.statReducer.played,
-    wins: state.statReducer.wins,
-    losses: state.statReducer.losses,
-    ties: state.statReducer.ties,
-    authToken: state.loginReducer.authToken,
-    user: state.loginReducer.user,
-    statId: state.statReducer.id,
-    gameOver: state.inGameReducer.gameOver
+    state
   };
 }
 

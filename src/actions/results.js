@@ -27,8 +27,8 @@ export const resultAction = (
     wins,
     losses,
     ties,
-    userId,
-    username,
+    money,
+    netGain,
     authToken,
     statId
   ) => dispatch => {
@@ -43,8 +43,8 @@ export const resultAction = (
         wins,
         losses,
         ties,
-        userId,
-        username
+        money,
+        netGain
       })
     })
       .then(res => res.json())

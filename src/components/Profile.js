@@ -9,6 +9,8 @@ export function Profile(props) {
       <h3>Wins: {props.wins}</h3>
       <h3>Losses: {props.losses}</h3>
       <h3>Ties: {props.ties}</h3>
+      <h3>Money: {props.money}</h3>
+      <h3>Net Gain: {props.netGain}</h3>
     </div>
   );
 }
@@ -18,7 +20,9 @@ function mapStateToProps(state) {
     played: state.statReducer.played,
     wins: state.statReducer.wins,
     losses: state.statReducer.losses,
-    ties: state.statReducer.ties
+    ties: state.statReducer.ties,
+    money: state.statReducer.money,
+    netGain: state.statReducer.netGain
   };
 }
 

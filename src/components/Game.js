@@ -4,7 +4,7 @@ import { Dealer } from "./dealer";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutAction, removeAuth } from '../actions/auth';
-import { newGame, inGame, getStatsAction } from '../actions/actions';
+import { newGame, inGame, getStatsAction, statReset } from '../actions/actions';
 
 export function Game(props) {
   return (
@@ -20,6 +20,7 @@ export function Game(props) {
           <button className="signOut signOutButton" onClick={() => {
             props.dispatch(newGame())
             props.dispatch(inGame(false))
+            props.dispatch(statReset())
             props.dispatch(removeAuth())
             logoutAction()
           }}>
@@ -46,7 +47,10 @@ function mapStateToProps(state) {
     ties: state.statReducer.ties,
     authToken: state.loginReducer.authToken,
     user: state.loginReducer.user,
-    statId: state.statReducer.id
+    statId: state.statReducer.id,
+    bet: state.statReducer.bet,
+    money: state.statReducer.money,
+    netGain: state.statReducer.netGain
   };
 }
 

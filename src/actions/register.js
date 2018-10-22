@@ -76,6 +76,8 @@ export const statAction = (
   wins,
   losses,
   ties,
+  money,
+  netGain,
   userId,
   username,
   authToken
@@ -91,6 +93,8 @@ export const statAction = (
       wins,
       losses,
       ties,
+      money,
+      netGain,
       userId,
       username
     })

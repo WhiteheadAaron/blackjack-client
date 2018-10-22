@@ -102,6 +102,21 @@ export const statTie = value => {
   }
 }
 
+export const STAT_RESET = 'STAT_RESET';
+export const statReset = value => {
+  return {
+    type: STAT_RESET,
+    value
+  }
+}
+
+export const bet = value => {
+  return {
+    type: 'BET',
+    value
+  }
+}
+
 export const getStatsAction = authToken => dispatch => {
   dispatch(fetchStatsRequest());
   fetch(`${API_BASE_URL}/stats`, {
@@ -115,6 +130,4 @@ export const getStatsAction = authToken => dispatch => {
     .then(res => res.json())
     .then(res => dispatch(fetchStatsSuccess(res[0])))
     .catch(err => dispatch(fetchStatsError()));
-
-    
 };

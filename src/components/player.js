@@ -11,7 +11,8 @@ import {
   getStatsAction,
   statWin,
   statLoss,
-  statTie
+  statTie,
+  bet
 } from "../actions/actions";
 import { resultAction } from "../actions/results";
 
@@ -33,14 +34,14 @@ export function Player(props) {
   };
 
   const getNewCard = async (newArr, images) => {
-    console.log(newArr, images)
+    console.log(newArr, images);
     let pointTotal = newArr.reduce((sum, val) => sum + val, 0);
     console.log(pointTotal);
     let card;
     if (pointTotal < 17) {
       card = images[Math.floor(Math.random() * images.length)];
       props.dispatch(dealerCard(card));
-      images = images.filter(item => item !== card.src)
+      images = images.filter(item => item !== card.src);
       return {
         inputValue: [...newArr, card.value],
         images
@@ -57,7 +58,7 @@ export function Player(props) {
         return {
           inputValue,
           images
-        }
+        };
       }
       return {
         inputValue: newArr,
@@ -74,15 +75,15 @@ export function Player(props) {
     const value = await dealerPointCount();
     let images = props.images;
     let newArr = [value];
-    console.log(images)
+    console.log(images);
     const value1 = await getNewCard(newArr, images);
     newArr = value1.inputValue;
     images = value1.images;
-    console.log(images)
+    console.log(images);
     const value2 = await getNewCard(newArr, images);
     newArr = value2.inputValue;
     images = value2.images;
-    console.log(images)
+    console.log(images);
     const value3 = await getNewCard(newArr, images);
     newArr = value3.inputValue;
     images = value3.images;
@@ -114,19 +115,20 @@ export function Player(props) {
     await props.dispatch(getStatsAction(props.authToken));
     let newPlayed = (await props.played) + 1;
     let newWins = (await props.wins) + 1;
+    let newMoney = (await props.money) + (props.bet * 2);
     props.dispatch(
       resultAction(
         newPlayed,
         newWins,
         props.losses,
         props.ties,
-        props.user.id,
-        props.user.username,
+        newMoney,
+        props.netGain + props.bet,
         props.authToken,
         props.statId
       )
     );
-    props.dispatch(statWin());
+    props.dispatch(statWin(props.bet));
     props.dispatch(getStatsAction(props.authToken));
   };
 
@@ -142,13 +144,13 @@ export function Player(props) {
         props.wins,
         newLosses,
         props.ties,
-        props.user.id,
-        props.user.username,
+        props.money,
+        props.netGain - props.bet,
         props.authToken,
         props.statId
       )
     );
-    props.dispatch(statLoss());
+    props.dispatch(statLoss(-props.bet));
     props.dispatch(getStatsAction(props.authToken));
   };
 
@@ -164,8 +166,6 @@ export function Player(props) {
         props.wins,
         props.losses,
         newTies,
-        props.user.id,
-        props.user.username,
         props.authToken,
         props.statId
       )
@@ -177,41 +177,53 @@ export function Player(props) {
 
   if (props.inGame === false) {
     return (
-      <button
-        onClick={() => {
-          props.dispatch(newGame());
-          let images = props.images;
-          let card1 = images[Number(Math.floor(Math.random() * images.length))];
-          props.dispatch(takeCard(card1));
-          images = images.filter(item => item.src !== card1.src);
-          let card2 = images[Number(Math.floor(Math.random() * images.length))];
-          props.dispatch(takeCard(card2));
-          images = images.filter(item => item.src !== card2.src);
-          let card3 = images[Number(Math.floor(Math.random() * images.length))];
-          props.dispatch(dealerCard(card3));
-          props.dispatch(inGame(true));
-        }}
-      >
-        Hello
-      </button>
+      <React.Fragment>
+        <form
+          className="bettingForm"
+          onSubmit={e => {
+            e.preventDefault();
+            props.dispatch(newGame());
+            let images = props.images;
+            let card1 =
+              images[Number(Math.floor(Math.random() * images.length))];
+            props.dispatch(takeCard(card1));
+            images = images.filter(item => item.src !== card1.src);
+            let card2 =
+              images[Number(Math.floor(Math.random() * images.length))];
+            props.dispatch(takeCard(card2));
+            images = images.filter(item => item.src !== card2.src);
+            let card3 =
+              images[Number(Math.floor(Math.random() * images.length))];
+            props.dispatch(dealerCard(card3));
+            props.dispatch(inGame(true));
+            props.dispatch(bet(Number(e.currentTarget.betNumber.value)));
+          }}
+        >
+          <input type="number" name="betNumber" placeholder="Place Your Bet" min="1" max={props.money} />
+          <button type="submit" className="betButton">
+            Hello
+          </button>
+        </form>
+      </React.Fragment>
     );
   }
 
-  if (props.inGame === true && playerPointCount() === 22 && props.playerCards.length === 2) {
+  if (
+    props.inGame === true &&
+    playerPointCount() === 22 &&
+    props.playerCards.length === 2
+  ) {
     props.dispatch(removeAce([1, 11]));
   }
 
   if (props.inGame === true && playerPointCount() === 21) {
-
-      const dScore = dealerCardsFunction();
-      if (dScore === 21) {
-        tying();
-      }
-      if (dScore !== 21) {
-        winning();
-      }
-    
-
+    const dScore = dealerCardsFunction();
+    if (dScore === 21) {
+      tying();
+    }
+    if (dScore !== 21) {
+      winning();
+    }
   }
 
   if (props.inGame === true && playerPointCount() <= 21) {
@@ -262,15 +274,12 @@ export function Player(props) {
               }
             }
             if (newValue === 21) {
-
-                const dScore = dealerCardsFunction();
-                if (dScore === 21) {
-                  tying();
-                }
-                else {
-                  winning();
-                }
-
+              const dScore = dealerCardsFunction();
+              if (dScore === 21) {
+                tying();
+              } else {
+                winning();
+              }
             }
           }}
         >
@@ -317,7 +326,9 @@ function mapStateToProps(state) {
     playerCards: state.takeCardReducer.playerCards,
     inGame: state.takeCardReducer.inGame,
     dealerCards: state.takeCardReducer.dealerCards,
-    pPoints: state.takeCardReducer.pPoints
+    pPoints: state.takeCardReducer.pPoints,
+    money: state.statReducer.money,
+    netGain: state.statReducer.netGain
   };
 }
 
