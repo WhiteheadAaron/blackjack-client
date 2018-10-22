@@ -74,25 +74,36 @@ export function Player(props) {
     const value = await dealerPointCount();
     let images = props.images;
     let newArr = [value];
-    console.log(newArr)
+    console.log(images)
     const value1 = await getNewCard(newArr, images);
     newArr = value1.inputValue;
+    images = value1.images;
+    console.log(images)
     const value2 = await getNewCard(newArr, images);
     newArr = value2.inputValue;
+    images = value2.images;
+    console.log(images)
     const value3 = await getNewCard(newArr, images);
     newArr = value3.inputValue;
+    images = value3.images;
     const value4 = await getNewCard(newArr, images);
     newArr = value4.inputValue;
+    images = value4.images;
     const value5 = await getNewCard(newArr, images);
     newArr = value5.inputValue;
+    images = value5.images;
     const value6 = await getNewCard(newArr, images);
     newArr = value6.inputValue;
+    images = value6.images;
     const value7 = await getNewCard(newArr, images);
     newArr = value7.inputValue;
+    images = value7.images;
     const value8 = await getNewCard(newArr, images);
     newArr = value8.inputValue;
+    images = value8.images;
     const value9 = await getNewCard(newArr, images);
     newArr = value9.inputValue;
+    images = value9.images;
     const value10 = await getNewCard(newArr, images);
     return value10.inputValue.reduce((sum, val) => sum + val, 0);
   };
