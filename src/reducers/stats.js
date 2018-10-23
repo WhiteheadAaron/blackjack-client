@@ -61,7 +61,8 @@ const statReducer = (state = initialState, action) => {
             loading: false,
             error: null,
             played: state.played + 1,
-            ties: state.ties + 1
+            ties: state.ties + 1,
+            money: state.money + action.value
         });
     }
     if (action.type === 'BET') {

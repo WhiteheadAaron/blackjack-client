@@ -112,7 +112,7 @@ export function Player(props) {
     await props.dispatch(getStatsAction(props.authToken));
     let newPlayed = (await props.played) + 1;
     let newWins = (await props.wins) + 1;
-    let newMoney = (await props.money) + props.bet * 2;
+    let newMoney = (await props.money) + (props.bet * 2);
     props.dispatch(
       resultAction(
         newPlayed,
@@ -171,7 +171,7 @@ export function Player(props) {
         props.statId
       )
     );
-    props.dispatch(statTie());
+    props.dispatch(statTie(props.bet));
     props.dispatch(getStatsAction(props.authToken));
   };
   const faceDown = require(`../images/deck.jpg`);
@@ -280,14 +280,17 @@ export function Player(props) {
               if (!props.pPoints.includes(11) && card.value !== 11) {
                 dealerCardsFunction();
                 losing();
+                props.dispatch(getStatsAction(props.authToken))
               }
             }
             if (newValue === 21) {
               const dScore = dealerCardsFunction();
               if (dScore === 21) {
                 tying();
+                props.dispatch(getStatsAction(props.authToken))
               } else {
                 winning();
+                props.dispatch(getStatsAction(props.authToken))
               }
             }
           }}
@@ -302,21 +305,23 @@ export function Player(props) {
               console.log(dScore);
               console.log(playerPointCount());
               if (dScore > playerPointCount() && dScore <= 21) {
-                console.log(dScore, playerPointCount());
                 losing();
+                props.dispatch(getStatsAction(props.authToken))
               }
               if (
                 dScore < playerPointCount() ||
                 (dScore > 21 && playerPointCount() <= 21)
               ) {
-                console.log(dScore, playerPointCount(), props.dPoints);
                 winning();
+                props.dispatch(getStatsAction(props.authToken))
               }
               if (dScore === playerPointCount()) {
                 tying();
+                props.dispatch(getStatsAction(props.authToken))
               }
             };
             myFunction();
+            props.dispatch(getStatsAction(props.authToken))
           }}
         >
           Stay
