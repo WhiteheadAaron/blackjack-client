@@ -68,7 +68,9 @@ export function Login(props) {
                     getAuTo();
                   });
               } else {
-                console.log("passwords must match!");
+                alert("Passwords must match!");
+                e.target.password.value = '';
+                e.target.password2.value = '';
               }
             }}
           >
