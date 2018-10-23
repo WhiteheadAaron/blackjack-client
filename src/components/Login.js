@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loginAction } from "../actions/auth";
-import { getStatsAction } from '../actions/actions';
+import { getStatsAction } from "../actions/actions";
 import { registerAction, statAction } from "../actions/register";
 
 export function Login(props) {
@@ -31,11 +31,10 @@ export function Login(props) {
               e.preventDefault();
               let username = e.target.username.value.toLowerCase();
               let password = e.target.password.value;
-              props.dispatch(loginAction(username, password))
-              .then(() => {
-                console.log(props.authToken)
+              props.dispatch(loginAction(username, password)).then(() => {
+                console.log(props.authToken);
                 props.dispatch(getStatsAction(props.authToken));
-              })
+              });
             }}
           >
             <label>Login</label>
@@ -54,24 +53,43 @@ export function Login(props) {
               let username = e.target.username.value.toLowerCase();
               let password = e.target.password.value;
               if (password === e.target.password2.value) {
-                props.dispatch(registerAction(username, password))
-                .then((user) => {
-                  console.log(props, user)
-                  props.dispatch(loginAction(username, password))
-                  return user;
-                })
-                .then((res) => {
-                  console.log(res.id, username, props.authToken)
-                  props.dispatch(statAction(0, 0, 0, 0, 100, 0, res.id, username, props.authToken))
-                  return props.authToken;
-                })
-                .then((res) => {
-                  console.log(props, res)
-                  props.dispatch(getStatsAction(res))
-                });
-              }
-              else {
-                console.log('passwords must match!')
+                props
+                  .dispatch(registerAction(username, password))
+                  .then(user => {
+                    // props.dispatch(loginAction(username, password))
+
+                    // .then((user) => {
+                    //   console.log(user, props)
+                    const getAuTo = async () => {
+                      let auTo = await props.dispatch(
+                        loginAction(username, password)
+                      );
+                      console.log(auTo);
+                      props.dispatch(
+                        statAction(
+                          0,
+                          0,
+                          0,
+                          0,
+                          100,
+                          0,
+                          user.id,
+                          username,
+                          auTo
+                        )
+                      );
+                      props.dispatch(getStatsAction(auTo));
+                    };
+                    getAuTo();
+                  });
+                // })
+
+                // .then((res) => {
+                //   console.log(props, res)
+                //   props.dispatch(getStatsAction(res))
+                // });
+              } else {
+                console.log("passwords must match!");
               }
             }}
           >

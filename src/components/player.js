@@ -39,10 +39,10 @@ export function Player(props) {
     if (pointTotal < 17) {
       card = images[Math.floor(Math.random() * images.length)];
       props.dispatch(dealerCard(card));
-      images = images.filter(item => item !== card.src);
+      let newImages = images.filter(item => item.src !== card.src);
       return {
         inputValue: [...newArr, card.value],
-        images
+        newImages
       };
     }
     if (pointTotal > 21) {
@@ -53,19 +53,21 @@ export function Player(props) {
         let newArr3 = anArray.filter(item => item !== 11);
         let inputValue = newArr3.concat(newArr2);
         props.dispatch(removeDealerAce(inputValue));
+        let newImages = images;
         return {
           inputValue,
-          images
+          newImages
         };
       }
+      let newImages = images;
       return {
         inputValue: newArr,
-        images
+        newImages
       };
     }
     return {
       inputValue: newArr,
-      images
+      newImages: images
     };
   };
 
@@ -75,31 +77,31 @@ export function Player(props) {
     let newArr = [value];
     const value1 = await getNewCard(newArr, images);
     newArr = value1.inputValue;
-    images = value1.images;
+    images = value1.newImages;
     const value2 = await getNewCard(newArr, images);
     newArr = value2.inputValue;
-    images = value2.images;
+    images = value2.newImages;
     const value3 = await getNewCard(newArr, images);
     newArr = value3.inputValue;
-    images = value3.images;
+    images = value3.newImages;
     const value4 = await getNewCard(newArr, images);
     newArr = value4.inputValue;
-    images = value4.images;
+    images = value4.newImages;
     const value5 = await getNewCard(newArr, images);
     newArr = value5.inputValue;
-    images = value5.images;
+    images = value5.newImages;
     const value6 = await getNewCard(newArr, images);
     newArr = value6.inputValue;
-    images = value6.images;
+    images = value6.newImages;
     const value7 = await getNewCard(newArr, images);
     newArr = value7.inputValue;
-    images = value7.images;
+    images = value7.newImages;
     const value8 = await getNewCard(newArr, images);
     newArr = value8.inputValue;
-    images = value8.images;
+    images = value8.newImages;
     const value9 = await getNewCard(newArr, images);
     newArr = value9.inputValue;
-    images = value9.images;
+    images = value9.newImages;
     const value10 = await getNewCard(newArr, images);
     return value10.inputValue.reduce((sum, val) => sum + val, 0);
   };
@@ -133,13 +135,14 @@ export function Player(props) {
     await props.dispatch(getStatsAction(props.authToken));
     let newPlayed = (await props.played) + 1;
     let newLosses = (await props.losses) + 1;
+    let newMoney = (await props.money);
     props.dispatch(
       resultAction(
         newPlayed,
         props.wins,
         newLosses,
         props.ties,
-        props.money,
+        newMoney,
         props.netGain - props.bet,
         props.authToken,
         props.statId
@@ -155,13 +158,14 @@ export function Player(props) {
     await props.dispatch(getStatsAction(props.authToken));
     let newPlayed = (await props.played) + 1;
     let newTies = (await props.ties) + 1;
+    let newMoney = (await props.money) + props.bet;
     props.dispatch(
       resultAction(
         newPlayed,
         props.wins,
         props.losses,
         newTies,
-        props.money,
+        newMoney,
         props.netGain,
         props.authToken,
         props.statId

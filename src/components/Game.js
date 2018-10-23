@@ -10,7 +10,6 @@ export function Game(props) {
   return (
     <div className="gameBack">
       <div className="gameGrid">
-        <h3 className="moneyTop">${props.money}</h3>
         <Link className="profile" to="/profile">
           <button
             className="profileButton"
@@ -18,7 +17,7 @@ export function Game(props) {
               props.dispatch(getStatsAction(props.authToken));
             }}
           >
-            {props.user.username}
+            {props.user.username} (${props.money})
           </button>
         </Link>
         <button

@@ -103,6 +103,10 @@ export const registerAction = (username, password) => dispatch => {
         dispatch(loginAction(username, password))
         return res;
       })
+      .then((res) => {
+        console.log(res)
+        return (res)
+      })
       .catch(err => dispatch(registerError(err)))
   );
 };
