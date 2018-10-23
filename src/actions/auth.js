@@ -72,7 +72,6 @@ export const loginAction = (username, password) => dispatch => {
         storeAuthInfo(authToken, dispatch)
         return authToken;
       })
-      .then((authToken) => dispatch(getStatsAction(authToken)))
       .catch(err => {
         dispatch(authError(err));
       })

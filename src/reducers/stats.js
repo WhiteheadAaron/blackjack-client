@@ -3,7 +3,7 @@ const initialState = {
     losses: 0,
     ties: 0,
     played: 0,
-    money: 0,
+    money: 100,
     netGain: 0,
     bet: 0,
     id: null,
@@ -80,6 +80,8 @@ const statReducer = (state = initialState, action) => {
             wins: 0,
             losses: 0,
             ties: 0,
+            money: 100,
+            netGain: 0,
             bet: 0,
             id: null
         })

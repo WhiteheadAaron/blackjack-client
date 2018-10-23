@@ -23,31 +23,6 @@ export const registerError = value => {
   };
 };
 
-export const registerAction = (username, password) => dispatch => {
-  return (
-    fetch(`${API_BASE_URL}/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username,
-        password
-      })
-    })
-      .then(res => res.json())
-      .then(res => {
-        dispatch(registerSuccess(res));
-        return res;
-      })
-      .then(res => {
-        dispatch(loginAction(username, password));
-        return res;
-      })
-      .catch(err => dispatch(registerError(err)))
-  );
-};
-
 export const STAT = "STAT";
 export const stat = value => ({
   type: STAT,
@@ -82,6 +57,7 @@ export const statAction = (
   username,
   authToken
 ) => dispatch => {
+  console.log(authToken, played, username, userId)
   return fetch(`${API_BASE_URL}/stats`, {
     method: "POST",
     headers: {
@@ -103,4 +79,30 @@ export const statAction = (
     .then(res => console.log(res))
     .then(res => dispatch(statSuccess(res)))
     .catch(err => dispatch(statError()));
+};
+
+
+export const registerAction = (username, password) => dispatch => {
+  return (
+    fetch(`${API_BASE_URL}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        dispatch(registerSuccess(res));
+        return res;
+      })
+      .then((res) => {
+        dispatch(loginAction(username, password))
+        return res;
+      })
+      .catch(err => dispatch(registerError(err)))
+  );
 };

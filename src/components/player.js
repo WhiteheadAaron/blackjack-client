@@ -34,9 +34,7 @@ export function Player(props) {
   };
 
   const getNewCard = async (newArr, images) => {
-    console.log(newArr, images);
     let pointTotal = newArr.reduce((sum, val) => sum + val, 0);
-    console.log(pointTotal);
     let card;
     if (pointTotal < 17) {
       card = images[Math.floor(Math.random() * images.length)];
@@ -75,15 +73,12 @@ export function Player(props) {
     const value = await dealerPointCount();
     let images = props.images;
     let newArr = [value];
-    console.log(images);
     const value1 = await getNewCard(newArr, images);
     newArr = value1.inputValue;
     images = value1.images;
-    console.log(images);
     const value2 = await getNewCard(newArr, images);
     newArr = value2.inputValue;
     images = value2.images;
-    console.log(images);
     const value3 = await getNewCard(newArr, images);
     newArr = value3.inputValue;
     images = value3.images;
@@ -115,7 +110,7 @@ export function Player(props) {
     await props.dispatch(getStatsAction(props.authToken));
     let newPlayed = (await props.played) + 1;
     let newWins = (await props.wins) + 1;
-    let newMoney = (await props.money) + (props.bet * 2);
+    let newMoney = (await props.money) + props.bet * 2;
     props.dispatch(
       resultAction(
         newPlayed,
@@ -166,6 +161,8 @@ export function Player(props) {
         props.wins,
         props.losses,
         newTies,
+        props.money,
+        props.netGain,
         props.authToken,
         props.statId
       )
@@ -199,9 +196,17 @@ export function Player(props) {
             props.dispatch(bet(Number(e.currentTarget.betNumber.value)));
           }}
         >
-          <input type="number" name="betNumber" placeholder="Place Your Bet" min="1" max={props.money} />
+          <label className="betLabel">How much would you like to bet?</label>
+          <input
+            className="betInput"
+            type="number"
+            name="betNumber"
+            placeholder='Place Bet Here'
+            min="1"
+            max={props.money}
+          />
           <button type="submit" className="betButton">
-            Hello
+            Let's Play!
           </button>
         </form>
       </React.Fragment>

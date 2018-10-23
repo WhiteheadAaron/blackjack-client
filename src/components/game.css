@@ -1,179 +1,252 @@
 * {
-    cursor: default;
+  cursor: default;
 }
 
 .gameBack {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    overflow: hidden;
-    z-index: -1;
-    background-color: white;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -1;
+  background-color: rgb(29, 27, 27);
 }
 
 .gameGrid {
-    display: grid;
-    grid-template-columns: repeat(16, 75px);
-    grid-template-rows: repeat(16, 50px);
-    max-width: 1200px;
-    background-color: rgb(29, 27, 27);
-    border-left: solid 1px white;
-    border-right: solid 1px white;
-    /* background-image: url('../images/background.jpg'); */
-    background-size: 100%;
-    margin-left: auto;
-    margin-right: auto;
+  display: grid;
+  grid-template-columns: repeat(16, 75px);
+  grid-template-rows: repeat(16, 50px);
+  max-width: 1200px;
+  background-color: rgb(29, 27, 27);
+  background-size: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-
-.profileButton, .signOutButton {
-    margin: 20px;
-    font-size: 25px;
-    width: auto;
-    border: none;
-    padding-top: 15px;
-    background: none;
-    color: white;
-    outline: none;
+.profileButton,
+.signOutButton, .moneyTop {
+  margin: 20px;
+  font-size: 25px;
+  width: auto;
+  border: none;
+  padding-top: 15px;
+  background: none;
+  color: white;
+  outline: none;
 }
 
 .profile {
-    grid-column: 11 / 14;
-    grid-row: 1 / 2;
+  grid-column: 10 / 12;
+  grid-row: 1 / 2;
 }
 
 .signOut {
-    grid-column: 14 / 16;
-    grid-row: 1 / 2;
+  grid-column: 14 / 16;
+  grid-row: 1 / 2;
 }
 
-.profileButton:hover, .signOutButton:hover {
-    cursor: pointer;
-    transform: scale(1.2);
+.moneyTop {
+    grid-column: 12 / 13;
+}
+
+.profileButton:hover,
+.signOutButton:hover {
+  cursor: pointer;
+  transform: scale(1.2);
 }
 
 .deckImgDiv {
-    grid-column: 1 / 3;
-    grid-row: 6 / 10;
-    margin-left: 15px;
+  grid-column: 1 / 3;
+  grid-row: 6 / 10;
+  margin-left: 15px;
 }
 
 img {
-    height: 100%;
+  height: 100%;
 }
 
 .dealerCard0 {
-    grid-column: 4 / 6;
-    grid-row: 3 / 7;
+  grid-column: 4 / 6;
+  grid-row: 3 / 7;
 }
 
 .dealerCard1 {
-    grid-column: 6 / 8;
-    grid-row: 3 / 7;
+  grid-column: 6 / 8;
+  grid-row: 3 / 7;
 }
 
 .dealerCard2 {
-    grid-column: 8 / 10;
-    grid-row: 3 / 7;
+  grid-column: 8 / 10;
+  grid-row: 3 / 7;
 }
 
 .dealerCard3 {
-    grid-column: 10 / 12;
-    grid-row: 3 / 7;
+  grid-column: 10 / 12;
+  grid-row: 3 / 7;
 }
 
 .dealerCard4 {
-    grid-column: 12 / 14;
-    grid-row: 3 / 7;
+  grid-column: 12 / 14;
+  grid-row: 3 / 7;
 }
 
 .dealerCard5 {
-    grid-column: 14 / 16;
-    grid-row: 3 / 7;
+  grid-column: 14 / 16;
+  grid-row: 3 / 7;
 }
 
 .hitButton {
-    grid-column: 8 / 10;
-    grid-row: 15 / 17;
-    width: 100px;
-    height: 50px;
-    outline: none;
+  grid-column: 8 / 10;
+  grid-row: 15 / 17;
+  width: 100px;
+  height: 50px;
+  outline: none;
 }
 
 .stayButton {
-    grid-column: 10 / 12;
-    grid-row: 15 / 17;
-    width: 100px;
-    height: 50px;
-    outline: none;
+  grid-column: 10 / 12;
+  grid-row: 15 / 17;
+  width: 100px;
+  height: 50px;
+  outline: none;
 }
 
-.stayButton:hover, .hitButton:hover {
-    cursor: pointer;
+.stayButton:hover,
+.hitButton:hover {
+  cursor: pointer;
 }
 
 .playerCard0 {
-    grid-column: 4 / 6;
-    grid-row: 10 / 14;
+  grid-column: 4 / 6;
+  grid-row: 10 / 14;
 }
 
 .playerCard1 {
-    grid-column: 6 / 8;
-    grid-row: 10 / 14;
+  grid-column: 6 / 8;
+  grid-row: 10 / 14;
 }
 
 .playerCard2 {
-    grid-column: 8 / 10;
-    grid-row: 10 / 14;
+  grid-column: 8 / 10;
+  grid-row: 10 / 14;
 }
 
 .playerCard3 {
-    grid-column: 10 / 12;
-    grid-row: 10 / 14;
+  grid-column: 10 / 12;
+  grid-row: 10 / 14;
 }
 
 .playerCard4 {
-    grid-column: 12 / 14;
-    grid-row: 10 / 14;
+  grid-column: 12 / 14;
+  grid-row: 10 / 14;
 }
 
 .playerCard5 {
-    grid-column: 14 / 16;
-    grid-row: 10 / 14;
+  grid-column: 14 / 16;
+  grid-row: 10 / 14;
 }
 
 .playerPointCount {
-    grid-column: 4 / 10;
-    grid-row: 14 / 16;
-    padding-top: 30px;
-    color: white;
+  grid-column: 4 / 10;
+  grid-row: 14 / 16;
+  padding-top: 30px;
+  color: white;
 }
 
 .dealerPoints {
-    grid-column: 1 / 4;
-    grid-row: 4 / 6;
-    color: white;
-    padding-left: 10px;
+  grid-column: 1 / 4;
+  grid-row: 4 / 6;
+  color: white;
+  padding-left: 10px;
 }
 
 .playerPoints {
-    grid-column: 1 / 4;
-    grid-row: 11 / 13;
-    color: white;
-    padding-left: 10px;
+  grid-column: 1 / 4;
+  grid-row: 11 / 13;
+  color: white;
+  padding-left: 10px;
 }
 
 .youLost {
-    grid-column: 6 / 10;
-    grid-row: 7 / 10;
-    color: white;
+  grid-column: 6 / 10;
+  grid-row: 7 / 10;
+  color: white;
 }
 
 .playAgainButton {
-    cursor: pointer;
-    grid-column: 10 / 12;
-    grid-row: 8 / 9;
-    margin-bottom: 10px;
+  cursor: pointer;
+  grid-column: 10 / 12;
+  grid-row: 8 / 9;
+  margin-bottom: 10px;
 }
+
+.bettingForm {
+  color: white;
+  text-align: center;
+  grid-column: 6 / 12;
+  grid-row: 8 / 11;
+}
+
+.betLabel {
+  font-size: 25px;
+}
+
+.betInput {
+  display: block;
+  width: 70%;
+  height: 20%;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.betButton {
+  margin-top: 20px;
+  background-color: black;
+  color: white;
+  border: solid white 1px;
+  width: 110px;
+  height: 30px;
+  outline: none;
+}
+
+@media only screen and (max-width: 1150px) {
+  .gameGrid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 10%);
+    max-width: 1000px;
+    background-color: rgb(29, 27, 27);
+    background-size: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bettingForm {
+    position: absolute;
+    top: 300px;
+    left: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    text-align: center;
+  }
+
+  .betInput {
+    height: 30px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .bettingForm {
+    left: 20%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+    .bettingForm {
+      left: 7%;
+    }
+  }
