@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { logoutAction, removeAuth } from "../actions/auth";
-import { newGame, inGame, statReset, getStatsAction } from "../actions/actions";
+import { newGame, inGame, statReset } from "../actions/actions";
 
 export function Profile(props) {
   if (!props.authToken) {

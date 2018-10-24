@@ -460,7 +460,6 @@ const takeCardReducer = (state = initialState, action) => {
 
 
   if (action.type === REMOVE_ACE) {
-    console.log(action)
     return Object.assign({}, state, {
       pPoints: action.value
     });

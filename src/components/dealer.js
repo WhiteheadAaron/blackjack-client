@@ -4,15 +4,14 @@ import {
   dealerCard,
   newGame,
   takeCard,
-  inGame,
-  gameOver
+  inGame
 } from "../actions/actions";
 
 export class Dealer extends Component {
   renderDealerCards = () => {
     let newArr = this.props.dealerCards.map((item, index) => {
       return (
-        <div className={`dealerCard${index}`}>
+        <div key={index} className={`dealerCard${index}`}>
           <img
             src={require(`../images/${this.props.dealerCards[index].src}.jpg`)}
             alt={`Dealer card number ${index + 1}`}
@@ -26,7 +25,7 @@ export class Dealer extends Component {
   renderPlayerCards = () => {
     let newArr = this.props.playerCards.map((item, index) => {
       return (
-        <div className={`playerCard${index}`}>
+        <div key={index} className={`playerCard${index}`}>
           <img
             src={require(`../images/${this.props.playerCards[index].src}.jpg`)}
             alt={`Player card number ${index + 1}`}
@@ -83,7 +82,6 @@ export class Dealer extends Component {
     }
 
     if (this.props.inGame === "results") {
-      console.log(this.props)
       if (this.props.gameOver === "loss") {
         let dealerP = dealerPointCount();
         let playerP = playerPointCount();

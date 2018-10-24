@@ -8,7 +8,7 @@ export function Login(props) {
   return (
     <div className="backgroundLogin">
       <div className="Login">
-        <header className="howToPlay">BlackJack Game</header>
+        <header role="banner" className="howToPlay">BlackJack Game</header>
         <div className="howToPlayInfo">
           <p>
             This is an application where you can play Blackjack, the popular
@@ -32,21 +32,28 @@ export function Login(props) {
               let username = e.target.username.value.toLowerCase();
               let password = e.target.password.value;
               const loginF = async () => {
-                let authToken = await props.dispatch(loginAction(username, password))
-                if (authToken !== '') {
-                  props.dispatch(getStatsAction(authToken))
+                try {
+                  let authToken = await props.dispatch(
+                    loginAction(username, password)
+                  );
+                  props.dispatch(getStatsAction(authToken));
+                } catch (err) {
+                  console.log(err);
+                  if (err.status === 401) {
+                    alert("Username or Password is incorrect.");
+                  }
                 }
-                else {
-                  alert('Incorrect username or password')
-                }
-              }
+              };
               loginF();
-
             }}
           >
             <label>Login</label>
             <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" suggested="current-password" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+            />
             <button type="submit" className="signInSubmit">
               Submit
             </button>
@@ -63,22 +70,39 @@ export function Login(props) {
                 props
                   .dispatch(registerAction(username, password))
                   .then(user => {
-                    console.log(user.status)
-                    const getAuTo = async () => {
-                      let auTo = await props.dispatch(
-                        loginAction(username, password)
-                      );
-                      props.dispatch(
-                        statAction(0, 0, 0, 0, 100, 0, user.id, username, auTo)
-                      );
-                      props.dispatch(getStatsAction(auTo));
-                    };
-                    getAuTo();
+                    if (user) {
+                      const getAuTo = async () => {
+                        try {
+                          let auTo = await props.dispatch(
+                            loginAction(username, password)
+                          );
+                          props.dispatch(
+                            statAction(
+                              0,
+                              0,
+                              0,
+                              0,
+                              100,
+                              0,
+                              user.id,
+                              username,
+                              auTo
+                            )
+                          );
+                          props.dispatch(getStatsAction(auTo));
+                        } catch (err) {
+                          if (err.status === 401) {
+                            alert("Username or Password is incorrect.");
+                          }
+                        }
+                      };
+                      getAuTo();
+                    }
                   });
               } else {
                 alert("Passwords must match!");
-                e.target.password.value = '';
-                e.target.password2.value = '';
+                e.target.password.value = "";
+                e.target.password2.value = "";
               }
             }}
           >

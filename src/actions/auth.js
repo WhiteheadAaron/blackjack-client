@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode";
 import { API_BASE_URL } from "../config";
+import { normalizeResponseErrors } from '../utils';
 
 const saveAuthToken = authToken => {
   try {
@@ -49,30 +50,30 @@ export const storeAuthInfo = (authToken, dispatch) => {
 };
 
 export const logoutAction = () => dispatch => {
-    dispatch(removeAuthToken)
-}
+  dispatch(removeAuthToken);
+};
 
 export const loginAction = (username, password) => dispatch => {
   dispatch(authRequest());
-  return (
-    fetch(`${API_BASE_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username,
-        password
-      })
+  return fetch(`${API_BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username,
+      password
     })
-      .then(res => res.json())
-      .then(({ authToken }) => {
-        storeAuthInfo(authToken, dispatch)
-        return authToken;
-      })
-      .catch(err => {
-        dispatch(authError(err));
-        return err
-      })
-  );
+  })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
+    .then(({ authToken }) => {
+      storeAuthInfo(authToken, dispatch);
+      return authToken;
+    })
+    .catch(err => {
+      console.log(err)
+      dispatch(authError(err));
+      alert('Incorrect Username or Password')
+    });
 };
