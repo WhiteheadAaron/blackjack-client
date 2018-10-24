@@ -83,10 +83,10 @@ body {
     outline: none;
 }
 
-.signUpSubmit:hover, .signInSubmit:hover {
+/* .signUpSubmit:hover, .signInSubmit:hover {
     cursor: pointer;
     transform: scale(1.2);
-}
+} */
 
 @media only screen and (max-width: 800px) {
     .login {

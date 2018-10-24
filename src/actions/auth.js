@@ -74,6 +74,7 @@ export const loginAction = (username, password) => dispatch => {
       })
       .catch(err => {
         dispatch(authError(err));
+        return err
       })
   );
 };

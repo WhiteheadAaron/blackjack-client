@@ -31,10 +31,17 @@ export function Login(props) {
               e.preventDefault();
               let username = e.target.username.value.toLowerCase();
               let password = e.target.password.value;
-              props.dispatch(loginAction(username, password)).then(() => {
-                console.log(props.authToken);
-                props.dispatch(getStatsAction(props.authToken));
-              });
+              const loginF = async () => {
+                let authToken = await props.dispatch(loginAction(username, password))
+                if (authToken) {
+                  props.dispatch(getStatsAction(authToken))
+                }
+                else {
+                  alert('Incorrect username or password')
+                }
+              }
+              loginF();
+
             }}
           >
             <label>Login</label>
@@ -56,6 +63,7 @@ export function Login(props) {
                 props
                   .dispatch(registerAction(username, password))
                   .then(user => {
+                    console.log(user.status)
                     const getAuTo = async () => {
                       let auTo = await props.dispatch(
                         loginAction(username, password)
