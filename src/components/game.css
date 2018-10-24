@@ -2,6 +2,10 @@
   cursor: default;
 }
 
+button {
+    cursor: pointer;
+}
+
 .gameBack {
   position: absolute;
   top: 0;
