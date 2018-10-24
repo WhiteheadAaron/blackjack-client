@@ -109,10 +109,9 @@ export function Player(props) {
   const winning = async () => {
     props.dispatch(inGame("results"));
     props.dispatch(gameOver("win"));
-    await props.dispatch(getStatsAction(props.authToken));
-    let newPlayed = (await props.played) + 1;
-    let newWins = (await props.wins) + 1;
-    let newMoney = (await props.money) + (props.bet * 2);
+    let newPlayed = props.played + 1;
+    let newWins = props.wins + 1;
+    let newMoney = props.money + (props.bet * 2);
     props.dispatch(
       resultAction(
         newPlayed,
@@ -126,16 +125,15 @@ export function Player(props) {
       )
     );
     props.dispatch(statWin(props.bet));
-    props.dispatch(getStatsAction(props.authToken));
+    return props.authToken;
   };
 
   const losing = async () => {
-    props.dispatch(inGame("results"));
     props.dispatch(gameOver("loss"));
-    await props.dispatch(getStatsAction(props.authToken));
-    let newPlayed = (await props.played) + 1;
-    let newLosses = (await props.losses) + 1;
-    let newMoney = (await props.money);
+    props.dispatch(inGame("results"));
+    let newPlayed = props.played + 1;
+    let newLosses = props.losses + 1;
+    let newMoney = props.money;
     props.dispatch(
       resultAction(
         newPlayed,
@@ -149,16 +147,15 @@ export function Player(props) {
       )
     );
     props.dispatch(statLoss(-props.bet));
-    props.dispatch(getStatsAction(props.authToken));
+    return props.authToken;
   };
 
   const tying = async () => {
     props.dispatch(inGame("results"));
     props.dispatch(gameOver("tie"));
-    await props.dispatch(getStatsAction(props.authToken));
-    let newPlayed = (await props.played) + 1;
-    let newTies = (await props.ties) + 1;
-    let newMoney = (await props.money) + props.bet;
+    let newPlayed = props.played + 1;
+    let newTies = props.ties + 1;
+    let newMoney = props.money + props.bet;
     props.dispatch(
       resultAction(
         newPlayed,
@@ -172,9 +169,14 @@ export function Player(props) {
       )
     );
     props.dispatch(statTie(props.bet));
-    props.dispatch(getStatsAction(props.authToken));
+    return props.authToken;
   };
   const faceDown = require(`../images/deck.jpg`);
+
+  const getStatsPostGame = async (func) => {
+    let myAuth = await func();
+    props.dispatch(getStatsAction(myAuth))
+  }
 
   if (props.inGame === false) {
     return (
@@ -228,10 +230,10 @@ export function Player(props) {
   if (props.inGame === true && playerPointCount() === 21) {
     const dScore = dealerCardsFunction();
     if (dScore === 21) {
-      tying();
+      getStatsPostGame(tying)
     }
     if (dScore !== 21) {
-      winning();
+      getStatsPostGame(winning)
     }
   }
 
@@ -279,18 +281,15 @@ export function Player(props) {
               }
               if (!props.pPoints.includes(11) && card.value !== 11) {
                 dealerCardsFunction();
-                losing();
-                props.dispatch(getStatsAction(props.authToken))
+                getStatsPostGame(losing)
               }
             }
             if (newValue === 21) {
               const dScore = dealerCardsFunction();
               if (dScore === 21) {
-                tying();
-                props.dispatch(getStatsAction(props.authToken))
+                getStatsPostGame(tying)
               } else {
-                winning();
-                props.dispatch(getStatsAction(props.authToken))
+                getStatsPostGame(winning)
               }
             }
           }}
@@ -305,23 +304,19 @@ export function Player(props) {
               console.log(dScore);
               console.log(playerPointCount());
               if (dScore > playerPointCount() && dScore <= 21) {
-                losing();
-                props.dispatch(getStatsAction(props.authToken))
+                getStatsPostGame(losing)
               }
               if (
                 dScore < playerPointCount() ||
                 (dScore > 21 && playerPointCount() <= 21)
               ) {
-                winning();
-                props.dispatch(getStatsAction(props.authToken))
+                getStatsPostGame(winning)
               }
               if (dScore === playerPointCount()) {
-                tying();
-                props.dispatch(getStatsAction(props.authToken))
+                getStatsPostGame(tying)
               }
             };
             myFunction();
-            props.dispatch(getStatsAction(props.authToken))
           }}
         >
           Stay

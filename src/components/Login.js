@@ -33,7 +33,7 @@ export function Login(props) {
               let password = e.target.password.value;
               const loginF = async () => {
                 let authToken = await props.dispatch(loginAction(username, password))
-                if (authToken) {
+                if (authToken !== '') {
                   props.dispatch(getStatsAction(authToken))
                 }
                 else {
@@ -46,7 +46,7 @@ export function Login(props) {
           >
             <label>Login</label>
             <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" />
+            <input type="password" name="password" placeholder="Password" suggested="current-password" />
             <button type="submit" className="signInSubmit">
               Submit
             </button>

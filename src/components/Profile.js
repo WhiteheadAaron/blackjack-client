@@ -1,10 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { logoutAction, removeAuth } from "../actions/auth";
-import { newGame, inGame, statReset } from "../actions/actions";
+import { newGame, inGame, statReset, getStatsAction } from "../actions/actions";
 
 export function Profile(props) {
+  if (!props.authToken) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className="gameBack">
       <div className="profileGameGrid">
@@ -16,9 +19,7 @@ export function Profile(props) {
         <h3 className="profileMoney">Money: {props.money}</h3>
         <h3 className="profileGain">Net Gain: {props.netGain}</h3>
         <Link to="/" className="profileG">
-          <button className="profileGame" onClick={() => {}}>
-            Back to Game
-          </button>
+          <button className="profileGame">Back to Game</button>
         </Link>
         <Link to="/" className="profileSO">
           <button
@@ -47,7 +48,8 @@ function mapStateToProps(state) {
     losses: state.statReducer.losses,
     ties: state.statReducer.ties,
     money: state.statReducer.money,
-    netGain: state.statReducer.netGain
+    netGain: state.statReducer.netGain,
+    authToken: state.loginReducer.authToken
   };
 }
 

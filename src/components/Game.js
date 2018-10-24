@@ -57,7 +57,8 @@ function mapStateToProps(state) {
     statId: state.statReducer.id,
     bet: state.statReducer.bet,
     money: state.statReducer.money,
-    netGain: state.statReducer.netGain
+    netGain: state.statReducer.netGain,
+    gameOver: state.inGameReducer.gameOver
   };
 }
 

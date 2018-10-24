@@ -8,54 +8,61 @@ import {
   gameOver
 } from "../actions/actions";
 
-
 export class Dealer extends Component {
-
   renderDealerCards = () => {
-    let newArr = [];
-    for (let i = 0; i < this.props.dealerCards.length; i++) {
-      newArr.push(
-        <div className={`dealerCard${i}`}>
+    let newArr = this.props.dealerCards.map((item, index) => {
+      return (
+        <div className={`dealerCard${index}`}>
           <img
-            src={require(`../images/${this.props.dealerCards[i].src}.jpg`)}
-            alt={`Dealer card number ${i + 1}`}
+            src={require(`../images/${this.props.dealerCards[index].src}.jpg`)}
+            alt={`Dealer card number ${index + 1}`}
           />
         </div>
       );
-    }
+    });
     return newArr;
   };
 
   renderPlayerCards = () => {
-    let newArr = [];
-    for (let i = 0; i < this.props.playerCards.length; i++) {
-      newArr.push(
-        <div className={`playerCard${i}`}>
+    let newArr = this.props.playerCards.map((item, index) => {
+      return (
+        <div className={`playerCard${index}`}>
           <img
-            src={require(`../images/${this.props.playerCards[i].src}.jpg`)}
-            alt={`Player card number ${i + 1}`}
+            src={require(`../images/${this.props.playerCards[index].src}.jpg`)}
+            alt={`Player card number ${index + 1}`}
           />
         </div>
       );
-    }
+    });
     return newArr;
   };
+
+  newGameFunction = () => {
+    this.props.dispatch(newGame());
+    let images = this.props.images;
+    let card1 =
+      images[Number(Math.floor(Math.random() * images.length))];
+    this.props.dispatch(takeCard(card1));
+    images = images.filter(item => item.src !== card1.src);
+    let card2 =
+      images[Number(Math.floor(Math.random() * images.length))];
+    this.props.dispatch(takeCard(card2));
+    images = images.filter(item => item.src !== card2.src);
+    let card3 =
+      images[Number(Math.floor(Math.random() * images.length))];
+    this.props.dispatch(dealerCard(card3));
+    this.props.dispatch(inGame(false));
+  }
 
   render() {
     const faceDown = require(`../images/deck.jpg`);
     const playerPointCount = () => {
-      let total = 0;
-      for (let i = 0; i < this.props.pPoints.length; i++) {
-        total = total + this.props.pPoints[i];
-      }
+      let total = this.props.pPoints.reduce((sum, val) => sum + val, 0);
       return total;
     };
 
     const dealerPointCount = () => {
-      let total = 0;
-      for (let i = 0; i < this.props.dPoints.length; i++) {
-        total = total + this.props.dPoints[i];
-      }
+      let total = this.props.dPoints.reduce((sum, val) => sum + val, 0);
       return total;
     };
 
@@ -76,10 +83,8 @@ export class Dealer extends Component {
     }
 
     if (this.props.inGame === "results") {
-      if (
-        (dealerPointCount() > playerPointCount() && dealerPointCount() <= 21) ||
-        playerPointCount() > 21
-      ) {
+      console.log(this.props)
+      if (this.props.gameOver === "loss") {
         let dealerP = dealerPointCount();
         let playerP = playerPointCount();
         if (dealerPointCount() > 21 && playerPointCount() <= 21) {
@@ -94,20 +99,7 @@ export class Dealer extends Component {
             <button
               className="playAgainButton"
               onClick={() => {
-                this.props.dispatch(newGame());
-                let images = this.props.images;
-                let card1 =
-                  images[Number(Math.floor(Math.random() * images.length))];
-                this.props.dispatch(takeCard(card1));
-                images = images.filter(item => item.src !== card1.src);
-                let card2 =
-                  images[Number(Math.floor(Math.random() * images.length))];
-                this.props.dispatch(takeCard(card2));
-                images = images.filter(item => item.src !== card2.src);
-                let card3 =
-                  images[Number(Math.floor(Math.random() * images.length))];
-                this.props.dispatch(dealerCard(card3));
-                this.props.dispatch(inGame(false));
+                this.newGameFunction();
               }}
             >
               New Game
@@ -119,8 +111,7 @@ export class Dealer extends Component {
           </React.Fragment>
         );
       }
-      if (dealerPointCount() < playerPointCount() || dealerPointCount() > 21) {
-        this.props.dispatch(gameOver("win"));
+      if (this.props.gameOver === 'win') {
         let dealerP = dealerPointCount();
         let playerP = playerPointCount();
         if (dealerPointCount() > 21 && playerPointCount() <= 21) {
@@ -139,20 +130,7 @@ export class Dealer extends Component {
             <button
               className="playAgainButton"
               onClick={() => {
-                this.props.dispatch(newGame());
-                let images = this.props.images;
-                let card1 =
-                  images[Number(Math.floor(Math.random() * images.length))];
-                this.props.dispatch(takeCard(card1));
-                images = images.filter(item => item.src !== card1.src);
-                let card2 =
-                  images[Number(Math.floor(Math.random() * images.length))];
-                this.props.dispatch(takeCard(card2));
-                images = images.filter(item => item.src !== card2.src);
-                let card3 =
-                  images[Number(Math.floor(Math.random() * images.length))];
-                this.props.dispatch(dealerCard(card3));
-                this.props.dispatch(inGame(false));
+                this.newGameFunction();
               }}
             >
               New Game
@@ -160,11 +138,7 @@ export class Dealer extends Component {
           </React.Fragment>
         );
       }
-      if (
-        dealerPointCount() === playerPointCount() &&
-        dealerPointCount() <= 21 &&
-        playerPointCount() <= 21
-      ) {
+      if (this.props.gameOver === 'tie') {
         let dealerP = dealerPointCount();
         let playerP = playerPointCount();
         if (dealerPointCount() > 21 && playerPointCount() <= 21) {
@@ -183,20 +157,7 @@ export class Dealer extends Component {
             <button
               className="playAgainButton"
               onClick={() => {
-                this.props.dispatch(newGame());
-                let card1 = this.props.images[
-                  Number(Math.floor(Math.random() * this.props.images.length))
-                ];
-                this.props.dispatch(takeCard(card1));
-                let card2 = this.props.images[
-                  Number(Math.floor(Math.random() * this.props.images.length))
-                ];
-                this.props.dispatch(takeCard(card2));
-                let card3 = this.props.images[
-                  Number(Math.floor(Math.random() * this.props.images.length))
-                ];
-                this.props.dispatch(dealerCard(card3));
-                this.props.dispatch(inGame(false));
+                this.newGameFunction();
               }}
             >
               New Game

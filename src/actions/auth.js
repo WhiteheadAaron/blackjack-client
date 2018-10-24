@@ -1,7 +1,5 @@
 import jwtDecode from "jwt-decode";
-
 import { API_BASE_URL } from "../config";
-import { getStatsAction } from './actions';
 
 const saveAuthToken = authToken => {
   try {
@@ -43,7 +41,7 @@ export const authError = value => ({
   value
 });
 
-const storeAuthInfo = (authToken, dispatch) => {
+export const storeAuthInfo = (authToken, dispatch) => {
   const decodedToken = jwtDecode(authToken);
   dispatch(setAuthToken(authToken));
   dispatch(authSuccess(decodedToken.user));
@@ -75,26 +73,6 @@ export const loginAction = (username, password) => dispatch => {
       .catch(err => {
         dispatch(authError(err));
         return err
-      })
-  );
-};
-
-export const refreshAuthToken = () => (dispatch, getState) => {
-  dispatch(authRequest());
-  const authToken = getState().auth.authToken;
-  return (
-    fetch(`${API_BASE_URL}/auth/refresh`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
-    })
-      .then(res => res.json())
-      .then(({ authToken }) => storeAuthInfo(authToken, dispatch))
-      .catch(err => {
-        dispatch(authError(err));
-        dispatch(removeAuth());
-        removeAuthToken(authToken);
       })
   );
 };
