@@ -8,22 +8,6 @@ export function Login(props) {
   return (
     <div className="backgroundLogin">
       <div className="Login">
-        <header role="banner" className="howToPlay">BlackJack Game</header>
-        <div className="howToPlayInfo">
-          <p>
-            This is an application where you can play Blackjack, the popular
-            betting game. However, we just play for fun here, so you'll just be
-            playing with virtual money.
-          </p>
-          <ul className="rulesList">
-            <li>Some rules here</li>
-            <li>Some more rules</li>
-            <li>Some rules here</li>
-            <li>Some more rules</li>
-            <li>Some rules here</li>
-            <li>Some more rules</li>
-          </ul>
-        </div>
         <div className="loginGrid">
           <form
             className="loginForm"

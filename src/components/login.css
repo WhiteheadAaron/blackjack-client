@@ -14,7 +14,10 @@ select:focus {
 
 .backgroundLogin {
   position: absolute;
-  background-color: rgb(29, 27, 27);
+  background-image: url("../images/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   top: 0;
   bottom: 0;
   right: 0;
@@ -33,34 +36,18 @@ select:focus {
   padding-top: 20px;
 }
 
-.howToPlay {
-  grid-column: 2 / 6;
-  grid-row: 2 / 3;
-  font-size: 30px;
-  background-color: white;
-  padding: 15px;
-}
-
-.howToPlayInfo {
-  grid-column: 2 / 6;
-  grid-row: 3 / 13;
-  background-color: white;
-  padding: 15px;
-  font-size: 18px;
-}
-
 .loginGrid {
-  grid-column: 7 / 8;
+  grid-column: 2 / 3;
   grid-row: 2 / 7;
-  padding: 30px;
+  width: 250px;
   text-align: center;
   background-color: white;
 }
 
 .registerGrid {
-  grid-column: 7 / 8;
+  grid-column: 2 / 3;
   grid-row: 8 / 13;
-  padding: 20px;
+  width: 250px;
   text-align: center;
   background-color: white;
 }
@@ -76,6 +63,7 @@ select:focus {
 .loginGrid label,
 .registerGrid label {
   font-size: 25px;
+  margin-top: 10px;
   display: block;
 }
 
@@ -110,7 +98,6 @@ select:focus {
   .loginGrid {
     grid-column: 2 / 8;
     grid-row: 2 / 6;
-    padding: 10px;
     margin-bottom: 10px;
   }
 
