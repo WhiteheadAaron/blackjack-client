@@ -4,7 +4,8 @@ import {
   dealerCard,
   newGame,
   takeCard,
-  inGame
+  inGame,
+  getStatsAction
 } from "../actions/actions";
 
 export class Dealer extends Component {
@@ -98,6 +99,7 @@ export class Dealer extends Component {
               className="playAgainButton"
               onClick={() => {
                 this.newGameFunction();
+                this.props.dispatch(getStatsAction(this.props.authToken));
               }}
             >
               New Game
