@@ -67,9 +67,9 @@ export function Player(props) {
     };
   };
 
-  const dealerCardsFunction = async (input) => {
+  const dealerCardsFunction = async (input, lastCard) => {
     const value = await input;
-    let images = props.images;
+    let images = props.images.filter(item => item.src !== lastCard.src);
     let newArr = [value];
     const value1 = await getNewCard(newArr, images);
     newArr = value1.inputValue;
@@ -331,7 +331,7 @@ export function Player(props) {
             let newValue = playerPointCount() + card.value;
             if (props.pPoints.length === 5 && newValue <= 21) {
               const getTheScore = async () => {
-                const dScore = await dealerCardsFunction(dealerPointCount());
+                const dScore = await dealerCardsFunction(dealerPointCount(), card);
                 if (dScore === newValue) {
                   getStatsPostGame(tying);
                 }
@@ -355,13 +355,13 @@ export function Player(props) {
                 props.dispatch(removeAce(newPlayerPoints));
               }
               if (!props.pPoints.includes(11) && card.value !== 11) {
-                dealerCardsFunction(dealerPointCount());
+                dealerCardsFunction(dealerPointCount(), card);
                 getStatsPostGame(losing);
               }
             }
             if (newValue === 21) {
               const getTheScore = async () => {
-                const dScore = await dealerCardsFunction(dealerPointCount());
+                const dScore = await dealerCardsFunction(dealerPointCount(), card);
                 if (dScore === 21) {
                   getStatsPostGame(tying);
                 } else {
@@ -378,7 +378,7 @@ export function Player(props) {
           className="stayButton"
           onClick={() => {
             const myFunction = async () => {
-              const dScore = await dealerCardsFunction(dealerPointCount());
+              const dScore = await dealerCardsFunction(dealerPointCount(), {src: null});
               if (dScore > playerPointCount() && dScore <= 21) {
                 getStatsPostGame(losing);
               }
