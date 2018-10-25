@@ -54,7 +54,6 @@ const statReducer = (state = initialState, action) => {
             error: null,
             losses: state.losses + 1,
             played: state.played + 1,
-            money: state.money + action.value,
             netGain: state.netGain + action.value
         });
     }

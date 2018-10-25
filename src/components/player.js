@@ -107,7 +107,7 @@ export function Player(props) {
     let newPlayed = props.played + 1;
     let newWins = props.wins + 1;
     let newMoney = props.money + props.bet * 2;
-    props.dispatch(
+    let hello = await props.dispatch(
       resultAction(
         newPlayed,
         newWins,
@@ -120,23 +120,25 @@ export function Player(props) {
         props.statId
       )
     );
-    props.dispatch(statWin(props.bet));
+    props.dispatch(statWin(props.bet * 2));
     props.dispatch(inGame("results"));
-    return props.authToken;
+    return {
+      hello,
+      authToken: props.authToken
+    };
   };
 
   const losing = async () => {
     props.dispatch(gameOver("loss"));
     let newPlayed = props.played + 1;
     let newLosses = props.losses + 1;
-    let newMoney = props.money;
-    props.dispatch(
+    let hello = await props.dispatch(
       resultAction(
         newPlayed,
         props.wins,
         newLosses,
         props.ties,
-        newMoney,
+        props.money,
         props.netGain - props.bet,
         props.bankruptcies,
         props.authToken,
@@ -145,7 +147,10 @@ export function Player(props) {
     );
     props.dispatch(statLoss(-props.bet));
     props.dispatch(inGame("results"));
-    return props.authToken;
+    return {
+      hello,
+      authToken: props.authToken
+    };
   };
 
   const tying = async () => {
@@ -153,7 +158,7 @@ export function Player(props) {
     let newPlayed = props.played + 1;
     let newTies = props.ties + 1;
     let newMoney = props.money + props.bet;
-    props.dispatch(
+    let hello = await props.dispatch(
       resultAction(
         newPlayed,
         props.wins,
@@ -168,12 +173,15 @@ export function Player(props) {
     );
     props.dispatch(statTie(props.bet));
     props.dispatch(inGame("results"));
-    return props.authToken;
+    return {
+      hello,
+      authToken: props.authToken
+    };
   };
   const faceDown = require(`../images/deck.jpg`);
 
   const getStatsPostGame = async (func) => {
-    let myAuth = await func();
+    let myAuth = await func().authToken;
     props.dispatch(getStatsAction(myAuth));
   };
   if (props.inGame === false && props.help === true) {
