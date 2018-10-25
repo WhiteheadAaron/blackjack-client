@@ -58,7 +58,9 @@ function mapStateToProps(state) {
     bet: state.statReducer.bet,
     money: state.statReducer.money,
     netGain: state.statReducer.netGain,
-    gameOver: state.inGameReducer.gameOver
+    bankruptcies: state.statReducer.bankruptcies,
+    gameOver: state.inGameReducer.gameOver,
+    help: state.inGameReducer.help
   };
 }
 

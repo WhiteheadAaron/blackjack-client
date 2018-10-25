@@ -2,7 +2,8 @@ import { IN_GAME, GAME_OVER } from "../actions/actions";
 
 const initialState = {
     inGame: false,
-    gameOver: null
+    gameOver: null,
+    help: true
 };
 
 const inGameReducer = (state = initialState, action) => {
@@ -15,7 +16,13 @@ const inGameReducer = (state = initialState, action) => {
     return Object.assign({}, state, {
       gameOver: action.value
     });
-  } else {
+  } 
+  if (action.type === 'HELP') {
+    return Object.assign({}, state, {
+      help: action.value
+    });
+  }
+  else {
     return state;
   }
 };

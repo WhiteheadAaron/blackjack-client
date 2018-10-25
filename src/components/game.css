@@ -3,7 +3,7 @@
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .gameBack {
@@ -47,12 +47,6 @@ button {
 .signOut {
   grid-column: 14 / 16;
   grid-row: 1 / 2;
-}
-
-.profileButton:hover,
-.signOutButton:hover {
-  cursor: pointer;
-  transform: scale(1.2);
 }
 
 .deckImgDiv {
@@ -117,12 +111,6 @@ img {
   border: solid white 1px;
 }
 
-.stayButton:hover,
-.hitButton:hover {
-  cursor: pointer;
-  transform: scale(1.2);
-}
-
 .playerCard0 {
   grid-column: 4 / 6;
   grid-row: 10 / 14;
@@ -185,10 +173,25 @@ img {
   grid-column: 10 / 12;
   grid-row: 8 / 9;
   margin-bottom: 10px;
+  background-color: black;
+  color: white;
+  border: solid white 1px;
 }
 
-.playAgainButton:hover {
-  transform: scale(1.2);
+.bankruptDiv {
+  color: white;
+  text-align: center;
+  grid-column: 6 / 13;
+  grid-row: 6 / 8;
+}
+
+.bankruptDiv button {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: solid white 1px;
+  height: 30px;
+  width: 100px;
 }
 
 .bettingForm {
@@ -221,16 +224,81 @@ img {
   height: 30px;
 }
 
-.betButton:hover {
-  transform: scale(1.2);
+.showHelp {
+  background-color: black;
+  color: white;
+  border: solid white 1px;
+  width: 100px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.helpScreen {
+  grid-column: 1 / 18;
+  grid-row: 3 / 15;
+  display: grid;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-rows: repeat(5, 50px);
+  grid-template-columns: repeat(5, 20%);
+  max-width: 500px;
+}
+
+.helpButton {
+  grid-column: 1 / 6;
+  grid-row: 6 / 7;
+  margin-top: 200px;
+  width: 100px;
+  height: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: black;
+  color: white;
+  border: solid white 1px;
+}
+
+.helpInfo {
+  grid-column: 1 / 6;
+  grid-row: 1 / 7;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: white;
+  margin-top: 50px;
+  font-size: 18px;
+}
+
+.helpInfo header {
+  text-align: center;
+  font-size: 20px;
+}
+
+.rules li {
+  margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 1150px) {
   .gameGrid {
-    grid-template-columns: repeat(28, 30px);
+    margin-left: 10px;
+    margin-right: 10px;
+    grid-template-columns: repeat(22, 5%);
     grid-template-rows: repeat(28, 50px);
     max-width: 1000px;
     background-color: rgb(29, 27, 27);
+  }
+
+  .bankruptDiv {
+    grid-column: 7 / 15;
+    grid-row: 6 / 8;
+  }
+
+  .helpScreen {
+    grid-column: 1 / 22;
+  }
+
+  .helpInfo {
+    margin-top: 50px;
+    font-size: 18px;
   }
 
   .deckImgDiv {
@@ -243,77 +311,89 @@ img {
   }
 
   .dealerCard0 {
-    grid-column: 5 / 8;
+    grid-column: 4 / 6;
     grid-row: 4 / 7;
   }
 
   .dealerCard1 {
-    grid-column: 9 / 12;
+    grid-column: 7 / 9;
     grid-row: 4 / 7;
   }
 
   .dealerCard2 {
-    grid-column: 13 / 16;
+    grid-column: 10 / 12;
     grid-row: 4 / 7;
   }
 
   .dealerCard3 {
-    grid-column: 17 / 20;
+    grid-column: 13 / 15;
     grid-row: 4 / 7;
   }
 
   .dealerCard4 {
-    grid-column: 21 / 24;
+    grid-column: 16 / 18;
     grid-row: 4 / 7;
   }
 
   .dealerCard5 {
-    grid-column: 25 / 28;
+    grid-column: 19 / 21;
     grid-row: 4 / 7;
   }
 
   .playerCard0 {
-    grid-column: 5 / 8;
+    grid-column: 4 / 6;
     grid-row: 10 / 13;
   }
 
   .playerCard1 {
-    grid-column: 9 / 12;
+    grid-column: 7 / 9;
     grid-row: 10 / 13;
   }
 
   .playerCard2 {
-    grid-column: 13 / 16;
+    grid-column: 10 / 12;
     grid-row: 10 / 13;
   }
 
   .playerCard3 {
-    grid-column: 17 / 20;
+    grid-column: 13 / 15;
     grid-row: 10 / 13;
   }
 
   .playerCard4 {
-    grid-column: 21 / 24;
+    grid-column: 16 / 18;
     grid-row: 10 / 13;
   }
 
   .playerCard5 {
-    grid-column: 25 / 28;
+    grid-column: 19 / 21;
     grid-row: 10 / 13;
   }
 
   .bettingForm {
-    position: absolute;
-    top: 300px;
-    left: 30%;
-    margin-left: auto;
-    margin-right: auto;
+    grid-column: 1 / 23;
     color: white;
-    text-align: center;
+  }
+
+  .youLost {
+    grid-column: 12 / 17;
+    grid-row: 7 / 8;
+  }
+
+  .playAgainButton {
+    grid-column: 12 / 15;
+    grid-row: 9 / 10;
+    background-color: black;
+    color: white;
+    border: solid white 1px;
+    width: 110px;
+    height: 30px;
+    margin-left: 25px;
   }
 
   .betInput {
     height: 30px;
+    max-width: 200px;
   }
 
   .profile {
@@ -330,14 +410,25 @@ img {
     padding-top: 0;
   }
 
+  .playerPoints {
+    grid-column: 5 / 11;
+    grid-row: 8 / 11;
+    margin-top: 30px;
+  }
+
+  .dealerPoints {
+    grid-column: 5 / 11;
+    grid-row: 7 / 8;
+  }
+
   .hitButton {
-    grid-column: 13 / 15;
-    grid-row: 13 / 14;
+    grid-column: 12 / 14;
+    grid-row: 14 / 15;
   }
 
   .stayButton {
-    grid-column: 17 / 19;
-    grid-row: 13 / 14;
+    grid-column: 16 / 18;
+    grid-row: 14 / 15;
   }
 
   .hitButton,
@@ -349,13 +440,15 @@ img {
 
 @media only screen and (max-width: 800px) {
   .gameGrid {
-    grid-template-columns: repeat(28, 30px);
+    grid-template-columns: repeat(20, 5%);
     grid-template-rows: repeat(28, 50px);
     max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .bettingForm {
-    left: 20%;
+    grid-column: 1 / 21;
   }
 
   .deckImgDiv {
@@ -371,7 +464,7 @@ img {
   .dealerCard1 {
     grid-column: 4 / 5;
     grid-row: 4 / 6;
-    margin-left: 5px;
+    margin-left: 10px;
   }
 
   .dealerCard2 {
@@ -403,12 +496,13 @@ img {
   .playerCard1 {
     grid-column: 4 / 5;
     grid-row: 9 / 11;
-    margin-left: 5px;
+    margin-left: 10px;
   }
 
   .playerCard2 {
     grid-column: 7 / 8;
     grid-row: 9 / 11;
+    margin-left: 5px;
   }
 
   .playerCard3 {
@@ -428,18 +522,18 @@ img {
 
   .playerPointCount {
     grid-column: 2 / 10;
-    grid-row: 10 / 11;
+    grid-row: 12 / 13;
     padding-top: 0;
   }
 
   .hitButton {
     grid-column: 10 / 11;
-    grid-row: 10 / 11;
+    grid-row: 12 / 13;
   }
 
   .stayButton {
     grid-column: 13 / 14;
-    grid-row: 10 / 11;
+    grid-row: 12 / 13;
   }
 
   .hitButton,
@@ -463,22 +557,33 @@ img {
 
   .youLost {
     font-size: 25px;
-    grid-column: 10 / 16;
+    grid-column: 12 / 18;
     grid-row: 6 / 7;
     color: white;
+    margin-left: 20px;
   }
 
   .playAgainButton {
     cursor: pointer;
-    width: 80%;
-    height: 60%;
-    margin-top: 15px;
-    grid-column: 10 / 14;
+    width: 100px;
+    height: 30px;
+    grid-column: 12 / 16;
     grid-row: 7 / 8;
+    margin-top: 20px;
+  }
+
+  .signOut {
+    grid-column: 5 / 12;
   }
 }
 
 @media only screen and (max-width: 500px) {
+  .gameGrid {
+    grid-template-columns: repeat(10, 10%);
+    grid-template-rows: repeat(28, 50px);
+    max-width: 320px;
+  }
+
   .signOut {
     grid-column: 6 / 12;
     font-size: 20px;
@@ -489,9 +594,12 @@ img {
   }
 
   .bettingForm {
+    grid-row: 6 / 10;
+    grid-column: 1 / 11;
+    max-width: 320px;
+    margin-left: 10px;
+    margin-right: 10px;
     left: 0;
-    padding: 10px;
-    top: 200px;
   }
 
   .deckImgDiv {
@@ -542,25 +650,23 @@ img {
   .playerCard0 {
     grid-column: 1 / 2;
     grid-row: 10 / 12;
-    margin-left: 10px;
   }
 
   .playerCard1 {
     grid-column: 3 / 4;
     grid-row: 10 / 12;
-    margin-left: 22px;
+    margin-left: 20px;
   }
 
   .playerCard2 {
-    grid-column: 6 / 7;
+    grid-column: 5 / 6;
     grid-row: 10 / 12;
-    margin-left: 4px;
+    margin-left: 25px;
   }
 
   .playerCard3 {
     grid-column: 8 / 9;
     grid-row: 10 / 12;
-    margin-left: 20px;
   }
 
   .playerCard4 {
@@ -596,20 +702,21 @@ img {
     margin-left: 15px;
     grid-row: 5 / 6;
     color: white;
-    font-size: 18px;
+    font-size: 15px;
   }
 
   .playerPoints {
     grid-column: 3 / 10;
     margin-left: 15px;
-    grid-row: 9 / 10;
+    grid-row: 8 / 9;
     color: white;
-    font-size: 18px;
+    font-size: 15px;
   }
 
   .youLost {
     font-size: 20px;
-    grid-column: 5 / 8;
+    margin-left: 25px;
+    grid-column: 4 / 9;
     grid-row: 6 / 7;
     color: white;
   }
@@ -628,5 +735,16 @@ img {
     grid-column: 3 / 10;
     grid-row: 6 / 7;
     padding-top: 0;
+  }
+
+  .helpInfo {
+    font-size: 14px;
+  }
+
+  .bankruptDiv {
+    color: white;
+    text-align: center;
+    grid-column: 1 / 12;
+    grid-row: 6 / 8;
   }
 }

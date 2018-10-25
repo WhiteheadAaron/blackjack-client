@@ -90,12 +90,6 @@ select:focus {
   outline: none;
 }
 
-.signUpSubmit:hover,
-.signInSubmit:hover {
-  cursor: pointer;
-  transform: scale(1.2);
-}
-
 @media only screen and (max-width: 800px) {
   .login {
     grid-template-rows: repeat(16, 50px);

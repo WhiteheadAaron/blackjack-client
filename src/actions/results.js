@@ -29,6 +29,7 @@ export const resultAction = (
     ties,
     money,
     netGain,
+    bankruptcies,
     authToken,
     statId
   ) => dispatch => {
@@ -44,7 +45,8 @@ export const resultAction = (
         losses,
         ties,
         money,
-        netGain
+        netGain,
+        bankruptcies
       })
     })
       .then(res => res.json())

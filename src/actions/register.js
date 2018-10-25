@@ -53,6 +53,7 @@ export const statAction = (
   ties,
   money,
   netGain,
+  bankruptcies,
   userId,
   username,
   authToken
@@ -71,6 +72,7 @@ export const statAction = (
       ties,
       money,
       netGain,
+      bankruptcies,
       userId,
       username
     })

@@ -8,6 +8,13 @@ export const inGame = value => {
   };
 };
 
+export const help = value => {
+  return {
+    type: 'HELP',
+    value
+  }
+}
+
 export const GAME_OVER = "GAME_OVER";
 export const gameOver = value => {
   return {
@@ -113,6 +120,13 @@ export const statReset = value => {
 export const bet = value => {
   return {
     type: 'BET',
+    value
+  }
+}
+
+export const bankrupt = value => {
+  return {
+    type: 'BANKRUPT',
     value
   }
 }

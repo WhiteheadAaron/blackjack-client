@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   takeCard,
   inGame,
+  help,
   dealerCard,
   newGame,
   gameOver,
@@ -12,7 +13,8 @@ import {
   statWin,
   statLoss,
   statTie,
-  bet
+  bet,
+  bankrupt
 } from "../actions/actions";
 import { resultAction } from "../actions/results";
 
@@ -29,9 +31,8 @@ export function Player(props) {
 
   const getNewCard = async (newArr, images) => {
     let pointTotal = newArr.reduce((sum, val) => sum + val, 0);
-    console.log(images)
     let card;
-    if (pointTotal < 17) {
+    if (pointTotal < 17 && newArr.length < 6) {
       card = images[Math.floor(Math.random() * images.length)];
       props.dispatch(dealerCard(card));
       let newImages = images.filter(item => item.src !== card.src);
@@ -66,8 +67,8 @@ export function Player(props) {
     };
   };
 
-  const dealerCardsFunction = async () => {
-    const value = await dealerPointCount();
+  const dealerCardsFunction = async (input) => {
+    const value = await input;
     let images = props.images;
     let newArr = [value];
     const value1 = await getNewCard(newArr, images);
@@ -114,6 +115,7 @@ export function Player(props) {
         props.ties,
         newMoney,
         props.netGain + props.bet,
+        props.bankruptcies,
         props.authToken,
         props.statId
       )
@@ -136,6 +138,7 @@ export function Player(props) {
         props.ties,
         newMoney,
         props.netGain - props.bet,
+        props.bankruptcies,
         props.authToken,
         props.statId
       )
@@ -158,6 +161,7 @@ export function Player(props) {
         newTies,
         newMoney,
         props.netGain,
+        props.bankruptcies,
         props.authToken,
         props.statId
       )
@@ -172,45 +176,117 @@ export function Player(props) {
     let myAuth = await func();
     props.dispatch(getStatsAction(myAuth));
   };
-
-  if (props.inGame === false) {
+  if (props.inGame === false && props.help === true) {
     return (
-      <React.Fragment>
-        <form
-          className="bettingForm"
-          onSubmit={e => {
-            e.preventDefault();
-            props.dispatch(newGame());
-            let images = props.images;
-            let card1 =
-              images[Number(Math.floor(Math.random() * images.length))];
-            props.dispatch(takeCard(card1));
-            images = images.filter(item => item.src !== card1.src);
-            let card2 =
-              images[Number(Math.floor(Math.random() * images.length))];
-            props.dispatch(takeCard(card2));
-            images = images.filter(item => item.src !== card2.src);
-            let card3 =
-              images[Number(Math.floor(Math.random() * images.length))];
-            props.dispatch(dealerCard(card3));
-            props.dispatch(inGame(true));
-            props.dispatch(bet(Number(e.currentTarget.betNumber.value)));
+      <div className="helpScreen">
+        <div className="helpInfo">
+          <header role="banner">Blackjack</header>
+          <ul className="rules">
+            <li>
+              You start with two cards and a point total. You decide if you want
+              to gamble and take anoter card, or stick with what you have. You
+              and the dealer are limited to a maximum of 6 cards.
+            </li>
+            <li>
+              The game is over once you either stay, have 21 points, or go over
+              21 points. If you have more than the dealer, but less than 21, you
+              win.
+            </li>
+            <li>
+              Every card is worth the same value as the number on the card,
+              except for aces and face cards. Aces are worth either 1 or 11,
+              whichever benefits you more. Jacks, Queens and Kings are worth 10
+              points each.
+            </li>
+            <li>Lastly, all bets are 1 for 1.</li>
+          </ul>
+        </div>
+        <button
+          className="helpButton"
+          onClick={() => {
+            props.dispatch(help(false));
           }}
         >
-          <label className="betLabel">How much would you like to bet?</label>
-          <input
-            className="betInput"
-            type="number"
-            name="betNumber"
-            placeholder="Place Bet Here"
-            min="1"
-            max={props.money}
-          />
-          <button type="submit" className="betButton">
-            Let's Play!
-          </button>
-        </form>
-      </React.Fragment>
+          Ready
+        </button>
+      </div>
+    );
+  }
+
+  if (props.inGame === false && props.help === false && props.money === 0) {
+    return (
+      <div className="bankruptDiv">
+        <p className="bankruptInfo">
+          Uh Oh! It looks like you ran out of money. Click below to get some
+          more!
+        </p>
+        <button
+          className="bankruptButton"
+          onClick={() => {
+            props.dispatch(
+              resultAction(
+                props.played,
+                props.wins,
+                props.losses,
+                props.ties,
+                100,
+                props.netGain,
+                props.bankruptcies + 1,
+                props.authToken,
+                props.statId
+              )
+            );
+            props.dispatch(bankrupt());
+          }}
+        >
+          Get Money!
+        </button>
+      </div>
+    );
+  }
+
+  if (props.inGame === false && props.help === false) {
+    return (
+      <form
+        className="bettingForm"
+        onSubmit={e => {
+          e.preventDefault();
+          props.dispatch(newGame());
+          let images = props.images;
+          let card1 = images[Number(Math.floor(Math.random() * images.length))];
+          props.dispatch(takeCard(card1));
+          images = images.filter(item => item.src !== card1.src);
+          let card2 = images[Number(Math.floor(Math.random() * images.length))];
+          props.dispatch(takeCard(card2));
+          images = images.filter(item => item.src !== card2.src);
+          props.dispatch(bet(Number(e.currentTarget.betNumber.value)));
+          let card3 = images[Number(Math.floor(Math.random() * images.length))];
+          props.dispatch(dealerCard(card3));
+          props.dispatch(inGame(true));
+        }}
+      >
+        <label className="betLabel">How much would you like to bet?</label>
+        <input
+          className="betInput"
+          type="number"
+          name="betNumber"
+          placeholder="Place Bet Here"
+          min="1"
+          max={props.money}
+          required
+        />
+        <button type="submit" className="betButton">
+          Let's Play!
+        </button>
+        <button
+          className="showHelp"
+          onClick={() => {
+            props.dispatch(help(true));
+          }}
+        >
+          Help
+        </button>
+      </form>
     );
   }
 
@@ -228,9 +304,7 @@ export function Player(props) {
         return (
           <div key={index} className={`playerCard${index}`}>
             <img
-              src={require(`../images/${
-                props.playerCards[index].src
-              }.jpg`)}
+              src={require(`../images/${props.playerCards[index].src}.jpg`)}
               alt={`Player card number ${index + 1}`}
             />
           </div>
@@ -255,6 +329,21 @@ export function Player(props) {
               ];
             props.dispatch(takeCard(card));
             let newValue = playerPointCount() + card.value;
+            if (props.pPoints.length === 5 && newValue <= 21) {
+              const getTheScore = async () => {
+                const dScore = await dealerCardsFunction(dealerPointCount());
+                if (dScore === newValue) {
+                  getStatsPostGame(tying);
+                }
+                if (newValue > dScore || dScore > 21) {
+                  getStatsPostGame(winning);
+                }
+                if (newValue < dScore) {
+                  getStatsPostGame(losing);
+                }
+              };
+              getTheScore();
+            }
 
             if (newValue > 21) {
               if (props.pPoints.includes(11) || card.value === 11) {
@@ -266,21 +355,20 @@ export function Player(props) {
                 props.dispatch(removeAce(newPlayerPoints));
               }
               if (!props.pPoints.includes(11) && card.value !== 11) {
-                dealerCardsFunction();
+                dealerCardsFunction(dealerPointCount());
                 getStatsPostGame(losing);
               }
             }
             if (newValue === 21) {
               const getTheScore = async () => {
-                const dScore = await dealerCardsFunction();
+                const dScore = await dealerCardsFunction(dealerPointCount());
                 if (dScore === 21) {
                   getStatsPostGame(tying);
                 } else {
                   getStatsPostGame(winning);
                 }
-              }
+              };
               getTheScore();
-
             }
           }}
         >
@@ -290,7 +378,7 @@ export function Player(props) {
           className="stayButton"
           onClick={() => {
             const myFunction = async () => {
-              const dScore = await dealerCardsFunction();
+              const dScore = await dealerCardsFunction(dealerPointCount());
               if (dScore > playerPointCount() && dScore <= 21) {
                 getStatsPostGame(losing);
               }
@@ -318,15 +406,7 @@ export function Player(props) {
 }
 
 function mapStateToProps(state) {
-  return {
-    images: state.takeCardReducer.images,
-    playerCards: state.takeCardReducer.playerCards,
-    inGame: state.takeCardReducer.inGame,
-    dealerCards: state.takeCardReducer.dealerCards,
-    pPoints: state.takeCardReducer.pPoints,
-    money: state.statReducer.money,
-    netGain: state.statReducer.netGain
-  };
+  return state;
 }
 
 export default connect(mapStateToProps)(Player);

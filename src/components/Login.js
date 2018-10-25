@@ -84,6 +84,7 @@ export function Login(props) {
                               0,
                               100,
                               0,
+                              0,
                               user.id,
                               username,
                               auTo

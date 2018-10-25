@@ -5,6 +5,7 @@ const initialState = {
     played: 0,
     money: 100,
     netGain: 0,
+    bankruptcies: 0,
     bet: 0,
     id: null,
     loading: false,
@@ -33,6 +34,7 @@ const statReducer = (state = initialState, action) => {
             ties: action.value.ties,
             money: action.value.money,
             netGain: action.value.netGain,
+            bankruptcies: action.value.bankruptcies,
             id: action.value.id
         });
     }
@@ -83,11 +85,17 @@ const statReducer = (state = initialState, action) => {
             ties: 0,
             money: 100,
             netGain: 0,
+            bankruptcies: 0,
             bet: 0,
             id: null
         })
     }
-    
+    if (action.type === 'BANKRUPT') {
+        return Object.assign({}, state, {
+            money: 100,
+            bankruptcies: state.bankruptcies + 1
+        })
+    }
     else {
         return state;
     }

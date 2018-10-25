@@ -18,6 +18,7 @@ export function Profile(props) {
         <h3 className="profileTies">Ties: {props.ties}</h3>
         <h3 className="profileMoney">Money: {props.money}</h3>
         <h3 className="profileGain">Net Gain: {props.netGain}</h3>
+        <h3 className="profileBankrupt">Bankruptcies: {props.bankruptcies}</h3>
         <Link to="/" className="profileG">
           <button className="profileGame">Back to Game</button>
         </Link>
@@ -49,6 +50,7 @@ function mapStateToProps(state) {
     ties: state.statReducer.ties,
     money: state.statReducer.money,
     netGain: state.statReducer.netGain,
+    bankruptcies: state.statReducer.bankruptcies,
     authToken: state.loginReducer.authToken
   };
 }

@@ -8,7 +8,7 @@ import Profile from "./components/Profile";
 import { connect } from "react-redux";
 import Home from "./components/home";
 
-class AppRouter extends Component {
+export class AppRouter extends Component {
   render() {
     return (
       <BrowserRouter>
