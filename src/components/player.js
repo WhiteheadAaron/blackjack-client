@@ -172,7 +172,7 @@ export function Player(props) {
   };
   const faceDown = require(`../images/deck.jpg`);
 
-  const getStatsPostGame = async func => {
+  const getStatsPostGame = async (func) => {
     let myAuth = await func();
     props.dispatch(getStatsAction(myAuth));
   };
@@ -380,16 +380,16 @@ export function Player(props) {
             const myFunction = async () => {
               const dScore = await dealerCardsFunction(dealerPointCount(), {src: null});
               if (dScore > playerPointCount() && dScore <= 21) {
-                getStatsPostGame(losing());
+                getStatsPostGame(losing);
               }
               if (
                 dScore < playerPointCount() ||
                 (dScore > 21 && playerPointCount() <= 21)
               ) {
-                getStatsPostGame(winning());
+                getStatsPostGame(winning);
               }
               if (dScore === playerPointCount()) {
-                getStatsPostGame(tying());
+                getStatsPostGame(tying);
               }
             };
             myFunction();
