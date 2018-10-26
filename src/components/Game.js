@@ -10,29 +10,32 @@ export function Game(props) {
   return (
     <div className="gameBack">
       <div className="gameGrid">
-        <Link className="profile" to="/profile">
+        <div className="prof-sign-out">
+          <Link className="profile" to="/profile">
+            <button
+              className="profileButton"
+              onClick={() => {
+                props.dispatch(getStatsAction(props.authToken));
+              }}
+            >
+              {props.user.username} ($
+              {props.money})
+            </button>
+          </Link>
           <button
-            className="profileButton"
+            className="signOut signOutButton"
             onClick={() => {
-              props.dispatch(getStatsAction(props.authToken));
+              props.dispatch(newGame());
+              props.dispatch(inGame(false));
+              props.dispatch(statReset());
+              props.dispatch(removeAuth());
+              logoutAction();
+              localStorage.removeItem("authToken");
             }}
           >
-            {props.user.username} (${props.money})
+            Sign Out
           </button>
-        </Link>
-        <button
-          className="signOut signOutButton"
-          onClick={() => {
-            props.dispatch(newGame());
-            props.dispatch(inGame(false));
-            props.dispatch(statReset());
-            props.dispatch(removeAuth());
-            logoutAction();
-            localStorage.removeItem("authToken");
-          }}
-        >
-          Sign Out
-        </button>
+        </div>
         <Dealer {...props} />
         <Player {...props} />
       </div>

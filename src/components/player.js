@@ -180,7 +180,7 @@ export function Player(props) {
   };
   const faceDown = require(`../images/deck.jpg`);
 
-  const getStatsPostGame = async (func) => {
+  const getStatsPostGame = async func => {
     let myAuth = await func().authToken;
     props.dispatch(getStatsAction(myAuth));
   };
@@ -208,15 +208,15 @@ export function Player(props) {
             </li>
             <li>Lastly, all bets are 1 for 1.</li>
           </ul>
+          <button
+            className="helpButton"
+            onClick={() => {
+              props.dispatch(help(false));
+            }}
+          >
+            Ready
+          </button>
         </div>
-        <button
-          className="helpButton"
-          onClick={() => {
-            props.dispatch(help(false));
-          }}
-        >
-          Ready
-        </button>
       </div>
     );
   }
@@ -339,7 +339,10 @@ export function Player(props) {
             let newValue = playerPointCount() + card.value;
             if (props.pPoints.length === 5 && newValue <= 21) {
               const getTheScore = async () => {
-                const dScore = await dealerCardsFunction(dealerPointCount(), card);
+                const dScore = await dealerCardsFunction(
+                  dealerPointCount(),
+                  card
+                );
                 if (dScore === newValue) {
                   getStatsPostGame(tying);
                 }
@@ -369,7 +372,10 @@ export function Player(props) {
             }
             if (newValue === 21) {
               const getTheScore = async () => {
-                const dScore = await dealerCardsFunction(dealerPointCount(), card);
+                const dScore = await dealerCardsFunction(
+                  dealerPointCount(),
+                  card
+                );
                 if (dScore === 21) {
                   getStatsPostGame(tying);
                 } else {
@@ -386,7 +392,9 @@ export function Player(props) {
           className="stayButton"
           onClick={() => {
             const myFunction = async () => {
-              const dScore = await dealerCardsFunction(dealerPointCount(), {src: null});
+              const dScore = await dealerCardsFunction(dealerPointCount(), {
+                src: null
+              });
               if (dScore > playerPointCount() && dScore <= 21) {
                 getStatsPostGame(losing);
               }
