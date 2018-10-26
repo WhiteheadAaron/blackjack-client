@@ -10,7 +10,7 @@ export function Game(props) {
   return (
     <div className="gameBack">
       <div className="gameGrid">
-        <div className="prof-sign-out">
+        <nav role="navigation" className="prof-sign-out">
           <Link className="profile" to="/profile">
             <button
               className="profileButton"
@@ -35,7 +35,7 @@ export function Game(props) {
           >
             Sign Out
           </button>
-        </div>
+        </nav>
         <Dealer {...props} />
         <Player {...props} />
       </div>
