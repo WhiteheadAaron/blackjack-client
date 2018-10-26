@@ -18,12 +18,13 @@ button {
 .gameGrid {
   display: grid;
   grid-template-columns: repeat(16, 75px);
-  grid-template-rows: repeat(16, 50px);
+  grid-template-rows: repeat(16, 1fr);
   max-width: 1200px;
   background-color: rgb(29, 27, 27);
   background-size: 100%;
   margin-left: auto;
   margin-right: auto;
+  max-height: 100%;
 }
 
 .profileButton,
@@ -259,7 +260,7 @@ img {
   grid-column: 1 / 6;
   grid-row: 1 / 7;
   margin-left: 10px;
-  margin-right: 10px;
+  margin-right: 20px;
   color: white;
   margin-top: 50px;
   font-size: 18px;
@@ -420,12 +421,12 @@ img {
 
   .hitButton {
     grid-column: 12 / 14;
-    grid-row: 14 / 15;
+    grid-row: 13 / 14;
   }
 
   .stayButton {
     grid-column: 16 / 18;
-    grid-row: 14 / 15;
+    grid-row: 13 / 14;
   }
 
   .hitButton,
