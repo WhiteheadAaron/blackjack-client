@@ -44,7 +44,7 @@ The game is currently in a kind of bare bones state of blackjack. What I mean by
 
 ### Screenshots
 
-![Login Screen](https://imgur.com/a/PlMJSHk)
+![Login Screen](https://imgur.com/H6FDfXw)
 
 
 
