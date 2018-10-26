@@ -8,6 +8,7 @@ export function Profile(props) {
   if (!props.authToken) {
     return <Redirect to="/" />;
   }
+  let netGain = props.money - (props.bankruptcies * 100) - 100;
   return (
     <div className="gameBack">
       <div className="profileGameGrid">
@@ -17,7 +18,7 @@ export function Profile(props) {
         <h3 className="profileLosses">Losses: {props.losses}</h3>
         <h3 className="profileTies">Ties: {props.ties}</h3>
         <h3 className="profileMoney">Money: {props.money}</h3>
-        <h3 className="profileGain">Net Gain: {props.netGain}</h3>
+        <h3 className="profileGain">Net Gain: {netGain}</h3>
         <h3 className="profileBankrupt">Bankruptcies: {props.bankruptcies}</h3>
         <Link to="/" className="profileG">
           <button className="profileGame">Back to Game</button>
