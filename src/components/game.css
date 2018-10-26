@@ -12,8 +12,6 @@ button {
   bottom: 0;
   right: 0;
   left: 0;
-  overflow: hidden;
-  z-index: -1;
   background-color: rgb(29, 27, 27);
 }
 
@@ -34,7 +32,6 @@ button {
   font-size: 25px;
   width: auto;
   border: none;
-  padding-top: 15px;
   background: none;
   color: white;
 }
@@ -46,7 +43,7 @@ button {
 
 .signOut {
   grid-column: 14 / 16;
-  grid-row: 1 / 2;
+  grid-row: 1 / 3;
 }
 
 .deckImgDiv {
