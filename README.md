@@ -44,7 +44,19 @@ The game is currently in a kind of bare bones state of blackjack. What I mean by
 
 ### Screenshots
 
-![Login Screen](https://imgur.com/H6FDfXw)
+![Imgur](https://i.imgur.com/Wh2DQnc.jpg)
+![Imgur](https://i.imgur.com/bU9AKBi.png)
+![Imgur](https://i.imgur.com/0sXfoKd.png)
+![Imgur](https://i.imgur.com/25kHTjL.png)
+![Imgur](https://i.imgur.com/NUZtTfo.png)
+![Imgur](https://i.imgur.com/b3SSApC.png)
+
+### Code
+
+* Disclaimer: This will be actively updated to clean the code up.
+* All of my actions are in the actions folder.
+* All of my reducers are in the reducers folder.
+* All of my components are in the components folder. Currently most of the code lives inside of the player and dealer components.
 
 
 
