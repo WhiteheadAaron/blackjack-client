@@ -181,8 +181,8 @@ export function Player(props) {
   const faceDown = require(`../images/deck.jpg`);
 
   const getStatsPostGame = async func => {
-    let myAuth = await func().authToken;
-    props.dispatch(getStatsAction(myAuth));
+    let myAuth = await func()
+    props.dispatch(getStatsAction(myAuth.authToken));
   };
   if (props.inGame === false && props.help === true) {
     return (
