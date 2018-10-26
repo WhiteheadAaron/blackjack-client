@@ -192,7 +192,7 @@ export function Player(props) {
           <ul className="rules">
             <li>
               You start with two cards and a point total. You decide if you want
-              to gamble and take anoter card, or stick with what you have. You
+              to gamble and take another card, or stick with what you have. You
               and the dealer are limited to a maximum of 6 cards.
             </li>
             <li>
