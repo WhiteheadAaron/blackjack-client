@@ -239,6 +239,7 @@ img {
   grid-template-rows: repeat(5, 20%);
   grid-template-columns: repeat(5, 20%);
   max-width: 500px;
+  max-height: 100%;
 }
 
 .helpButton {
@@ -286,6 +287,7 @@ img {
     grid-template-rows: repeat(28, 50px);
     max-width: 1000px;
     background-color: rgb(29, 27, 27);
+    max-height: 100%;
   }
 
   .bankruptDiv {
@@ -295,6 +297,7 @@ img {
 
   .helpScreen {
     grid-column: 1 / 22;
+    grid-row: 3 / 10;
   }
 
   .helpInfo {
@@ -438,6 +441,7 @@ img {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    max-height: 100%;
   }
 
   .bettingForm {
@@ -667,12 +671,12 @@ img {
   }
 
   .hitButton {
-    grid-column: 5 / 6;
+    grid-column: 4 / 5;
     grid-row: 7 / 8;
   }
 
   .stayButton {
-    grid-column: 5 / 6;
+    grid-column: 4 / 5;
     grid-row: 8 / 9;
   }
 
@@ -682,6 +686,7 @@ img {
     width: 100px;
     height: 30px;
     margin-top: 20px;
+    margin-left: 15px;
     text-align: center;
     font-size: 18px;
   }
@@ -724,6 +729,7 @@ img {
     grid-column: 3 / 10;
     grid-row: 6 / 7;
     padding-top: 0;
+    font-size: 18px;
   }
 
   .helpInfo {
