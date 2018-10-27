@@ -678,10 +678,12 @@ img {
 
   .hitButton,
   .stayButton {
-    height: 70%;
-    width: 75px;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
     margin-top: 20px;
     text-align: center;
+    font-size: 18px;
   }
 
   .dealerPoints {
@@ -727,6 +729,7 @@ img {
   .helpInfo {
     font-size: 13px;
     margin-top: 10px;
+    max-height: 100%;
   }
 
   .bankruptDiv {
