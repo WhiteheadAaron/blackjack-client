@@ -11,6 +11,7 @@ export function Game(props) {
     <div className="gameBack">
       <div className="gameGrid">
         <nav role="navigation" className="prof-sign-out">
+          <h2>BlackJack</h2>
           <Link className="profile" to="/profile">
             <button
               className="profileButton"

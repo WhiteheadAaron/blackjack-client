@@ -245,6 +245,7 @@ img {
 .helpButton {
   width: 100px;
   height: 30px;
+  margin-top: 20px;
   background-color: black;
   color: white;
   border: solid white 1px;
@@ -274,9 +275,22 @@ img {
 .prof-sign-out {
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  justify-content: center;
   grid-row: 1;
-  grid-column: 1;
+  grid-column: 1 / 17;
+  max-width: 100%;
+}
+
+
+.profileButton {
+  position: relative;
+  left: 30px;
+}
+
+.prof-sign-out h2 {
+  color: white;
+  font-size: 23px;
+  margin-left: 0px;
 }
 
 @media only screen and (max-width: 1150px) {
@@ -435,6 +449,21 @@ img {
 }
 
 @media only screen and (max-width: 800px) {
+
+  .profileButton {
+    position: relative;
+    left: 30px;
+  }
+
+  .prof-sign-out button {
+    font-size: 14px;
+  }
+
+  .prof-sign-out h2 {
+    font-size: 16px;
+    margin-top: 17px;
+  }
+
   .gameGrid {
     grid-template-columns: repeat(20, 5%);
     grid-template-rows: repeat(28, 50px);
@@ -568,8 +597,6 @@ img {
     grid-row: 7 / 8;
     margin-top: 20px;
   }
-
-
 }
 
 @media only screen and (max-width: 500px) {
@@ -579,7 +606,8 @@ img {
     max-width: 320px;
   }
 
-  .profileButton, .signOutButton {
+  .profileButton,
+  .signOutButton {
     font-size: 20px;
   }
 
