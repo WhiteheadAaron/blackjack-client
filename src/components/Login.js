@@ -8,6 +8,13 @@ export function Login(props) {
   return (
     <div className="backgroundLogin">
       <div className="Login">
+        <div className="loginInfo">
+          <h1>BlackJack</h1>
+          <p>
+            Login or signup to play BlackJack. It's 100% free. What are you
+            waiting for?
+          </p>
+        </div>
         <div className="loginGrid">
           <form
             className="loginForm"
@@ -33,11 +40,9 @@ export function Login(props) {
           >
             <label>Login</label>
             <input type="text" name="username" placeholder="Username" />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-            />
+            <input type="password" name="password" placeholder="Password" />
+            <p className="demo demo2">Demo Username: test</p>
+            <p className="demo">Password: pass123</p>
             <button type="submit" className="signInSubmit">
               Submit
             </button>
